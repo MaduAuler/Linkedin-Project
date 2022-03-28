@@ -1,0 +1,148 @@
+.flex-container {
+  height: 6vh;
+  align-items: center;
+  background-color: #ffffff;
+  box-shadow: 0 4px 2px -2px rgb(236, 235, 235);
+}
+
+.logo-search {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.img-logo {
+  font-size: 2rem;
+  color: #2867b2;
+}
+
+.icons {
+  color: #676767;
+  font-size: 1.7rem;
+}
+
+.icon-grid {
+  color: #676767;
+  font-size: 1.5rem;
+}
+
+.icon-text {
+  font-size: 0.7rem;
+  color: #676767;
+}
+
+.dropdown-button {
+  height: 5px;
+  padding: 0;
+  margin: 0;
+  font-size: 0.2rem;
+}
+
+.dropdown-button button {
+  border: none !important;
+}
+.dropdown-toggle::after {
+  display: none !important;
+}
+
+.me-icon::after {
+  display: inline-block;
+  margin-left: 0.255em;
+  vertical-align: 0.255em;
+  content: "";
+  border-top: 0.3em solid;
+  border-right: 0.3em solid transparent;
+  border-bottom: 0;
+  border-left: 0.3em solid transparent;
+}
+.round {
+  border-radius: 100px;
+  height: 25px;
+}
+
+.input-nav {
+  background-color: #eef3f8;
+  border: none;
+  height: 30px;
+  width: 250px;
+  border-radius: 5%;
+}
+
+.icon-div {
+  height: 5vh;
+}
+
+.buttons {
+  text-decoration: none;
+  background-color: white;
+  border: none;
+}
+:hover {
+  color: black;
+}
+
+.vr {
+  height: 6vh;
+  background-color: #cac7c7;
+  width: 0.01vw;
+}
+
+.button-inside-dropdown {
+  text-decoration: none;
+  border: 1px solid #2867b2;
+  background-color: white;
+  border-radius: 20px;
+  width: 200px;
+  color: #2867b2;
+}
+
+.text-dropdown {
+  font-weight: bold;
+  padding-left: 25px;
+}
+
+.search-toggle {
+  font-size: 0;
+}
+@media only screen and (max-width: 600px) {
+  .icon-text {
+    display: none;
+  }
+  .icons {
+    font-size: 1rem;
+  }
+
+  .input-nav {
+    display: none;
+  }
+
+  .space {
+    display: none;
+  }
+
+  .drop2 {
+    display: none;
+  }
+
+  .search-toggle {
+    font-size: 1rem;
+  }
+
+  .arrow {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  .icon-text {
+    display: none;
+  }
+
+  .arrow {
+    display: none;
+  }
+
+  .drop2 {
+    display: none;
+  }
+}
