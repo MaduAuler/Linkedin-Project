@@ -136,3 +136,7 @@ body {
 .bottom-div i {
   color: rgb(114, 114, 114);
 }
+
+.row {
+  margin: 0;
+}

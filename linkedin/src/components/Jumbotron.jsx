@@ -2,7 +2,6 @@ import {
   Container,
   Row,
   Col,
-  Carousel,
   Button,
   Card,
   Image,
@@ -36,12 +35,12 @@ const Jumbotron = () => {
             <p>education</p>
           </Col>
         </Row>
-        <Row className="pl-5 mb-4 buttons">
-          <Button variant="primary">Open to</Button>{' '}
+        <Row className=" mb-4 buttons ml-5">
+          <Button variant="primary">Open to</Button>
           <Button variant="primary" className="mx-2">
             Add profile section
-          </Button>{' '}
-          <Button variant="primary">More</Button>{' '}
+          </Button>
+          <Button variant="primary">More</Button>
         </Row>
         <Row className="px-5 pb-4 d-flex justify-content-between carousel-div">
           <Card>
