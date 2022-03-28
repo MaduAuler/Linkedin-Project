@@ -1,0 +1,132 @@
+body {
+  background-color: #f3f2ee;
+}
+
+/* jumbotron-container */
+.jumbotron-container,
+.activity-container {
+  width: 60vw;
+  background-color: white;
+  border-radius: 8px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.bg-div {
+  background-image: url(http://placekitten.com/800/200);
+  border-radius: 8px;
+  height: 20vh;
+  position: relative;
+  margin: auto;
+}
+
+.fa-camera {
+  color: #0b66c2;
+  background-color: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.edit-div {
+  justify-content: flex-end;
+  position: relative;
+}
+
+.edit-div img {
+  position: absolute;
+  left: 50px;
+  bottom: 0;
+  border: 5px solid white;
+}
+
+.name-div {
+  text-align: start;
+}
+.name-div span {
+  font-weight: 700;
+  color: #0b66c2;
+}
+
+.education-div {
+  justify-content: flex-end;
+}
+
+.education-div img {
+  width: 30px;
+  height: 30px;
+}
+.education-div p {
+  font-weight: 600;
+}
+
+.buttons button {
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.buttons button:nth-child(1) {
+  background-color: #0b66c2;
+}
+.buttons button:nth-child(2) {
+  border: 1px solid #0b66c2;
+  background-color: white;
+  color: #0b66c2;
+}
+.buttons button:nth-child(3) {
+  border: 1px solid grey;
+  background-color: white;
+  color: grey;
+}
+
+.jumbotron-container .card {
+  border-radius: 10px;
+  width: 49%;
+}
+
+.jumbotron-container .card .fa-pen {
+  display: contents;
+}
+
+.carousel-div p {
+  margin-bottom: 0;
+  text-align: left;
+}
+
+.carousel-div p:nth-child(1) {
+  font-weight: 600;
+}
+.carousel-div p:nth-child(3) {
+  font-weight: 600;
+  color: #0b66c2;
+}
+
+/* activity container */
+.activity-container button {
+  height: 40px;
+  border: 1px solid #0b66c2;
+  background-color: white;
+  color: #0b66c2;
+  font-weight: 700;
+  border-radius: 20px;
+}
+
+.activity-container h5,
+.activity-container h6 {
+  font-weight: 600;
+}
+
+.activity-container .middle-div {
+  text-align: left;
+}
+
+.bottom-div h6,
+.bottom-div i {
+  color: rgb(114, 114, 114);
+}
