@@ -1,23 +1,17 @@
-
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import MyFooter from "./components/Footer";
-import Jumbotron from './components/Jumbotron'
-import NavBar from './components/NavBar';
+import Jumbotron from "./components/Jumbotron";
+import NavBar from "./components/NavBar";
 
-
-function App()
-{
+function App() {
   return (
     <div className="App">
-    
-      <NavBar/>
+      <NavBar />
       <Jumbotron />
-    <MyFooter />;
-  
+      <MyFooter />;
     </div>
   );
 }
 
 export default App;
-  
