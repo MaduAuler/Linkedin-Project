@@ -99,6 +99,96 @@ const Jumbotron = () => {
           <i class="fa-solid fa-arrow-right-long d-inline-block ml-2"></i>
         </div>
       </Container>
+
+      <Container fluid className="mt-4 experience-container">
+        <Row className="py-4">
+          <Col sm={12} md={6} className="name-div pl-5">
+            <h5 className="mb-0">Experience</h5>
+          </Col>
+          <Col sm={12} md={6} pr-5 className="d-flex education-div pr-5">
+            <i class="fa-solid fa-plus mr-3"></i>
+            <i className="fa-solid fa-pen"></i>
+          </Col>
+        </Row>
+        <Row className="d-flex">
+          <div className="pl-5">
+            <Image src="http://placekitten.com/50/50" className="mr-2" />
+          </div>
+          <div className="pl-1 text-left">
+            <h6 className="mb-0">Frontend developer</h6>
+            <p className="mb-0">Company name</p>
+            <p className="mb-0">Feb 2022 - present・2mos</p>
+            <p className="mb-0">Remote</p>
+          </div>
+        </Row>
+        <hr className="my-3" />
+        <Row className="d-flex">
+          <div className="pl-5">
+            <Image src="http://placekitten.com/50/50" className="mr-2" />
+          </div>
+          <div className="pl-1 text-left">
+            <h6 className="mb-0">Frontend developer</h6>
+            <p className="mb-0">Company name</p>
+            <p className="mb-0">Feb 2022 - present・2mos</p>
+            <p className="mb-0">Remote</p>
+          </div>
+        </Row>
+        <hr className="my-3" />
+        <Row className="d-flex">
+          <div className="pl-5">
+            <Image src="http://placekitten.com/50/50" className="mr-2" />
+          </div>
+          <div className="pl-1 text-left">
+            <h6 className="mb-0">Frontend developer</h6>
+            <p className="mb-0">Company name</p>
+            <p className="mb-0">Feb 2022 - present・2mos</p>
+            <p className="mb-0">Remote</p>
+          </div>
+        </Row>
+        <hr className="my-3" />
+        <div className="bottom-div">
+          <h6 className="pb-2 d-inline-block">Show all experiences</h6>
+          <i class="fa-solid fa-arrow-right-long d-inline-block ml-2"></i>
+        </div>
+      </Container>
+
+      <Container fluid className="mt-4 education-container">
+        <Row className="py-4">
+          <Col sm={12} md={6} className="name-div pl-5">
+            <h5 className="mb-0">Education</h5>
+          </Col>
+          <Col sm={12} md={6} pr-5 className="d-flex education-div pr-5">
+            <i class="fa-solid fa-plus mr-3"></i>
+            <i className="fa-solid fa-pen"></i>
+          </Col>
+        </Row>
+        <Row className="d-flex">
+          <div className="pl-5">
+            <Image src="https://place.dog/50/50" className="mr-2" />
+          </div>
+          <div className="pl-1 text-left">
+            <h6 className="mb-0">Strive shool</h6>
+            <p className="mb-0">Computer science</p>
+            <p className="mb-0">Jan 2022 - present・2mos</p>
+          </div>
+        </Row>
+        <hr className="my-3" />
+        <Row className="d-flex">
+          <div className="pl-5">
+            <Image src="http://placekitten.com/50/50" className="mr-2" />
+          </div>
+          <div className="pl-1 text-left">
+            <h6 className="mb-0">Epicode</h6>
+            <p className="mb-0">Full stack developer</p>
+            <p className="mb-0">Jan 2022 - present・2mos</p>
+          </div>
+        </Row>
+        <hr className="my-3" />
+        <div className="bottom-div">
+          <h6 className="pb-2 d-inline-block">Show all experiences</h6>
+          <i class="fa-solid fa-arrow-right-long d-inline-block ml-2"></i>
+        </div>
+      </Container>
     </>
   )
 }

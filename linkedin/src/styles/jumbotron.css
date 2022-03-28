@@ -2,9 +2,10 @@ body {
   background-color: #f3f2ee;
 }
 
-/* jumbotron-container */
 .jumbotron-container,
-.activity-container {
+.activity-container,
+.experience-container,
+.education-container {
   width: 60vw;
   background-color: white;
   border-radius: 8px;
@@ -12,6 +13,7 @@ body {
   padding-right: 0;
 }
 
+/* jumbotron-container */
 .bg-div {
   background-image: url(http://placekitten.com/800/200);
   border-radius: 8px;
@@ -105,6 +107,10 @@ body {
 .carousel-div p:nth-child(3) {
   font-weight: 600;
   color: #0b66c2;
+}
+
+.carousel-div .card:first-child {
+  background-color: #e8e5df;
 }
 
 /* activity container */
