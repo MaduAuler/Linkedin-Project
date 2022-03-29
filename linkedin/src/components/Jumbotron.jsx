@@ -1,10 +1,31 @@
 import { useState, useEffect } from 'react'
-import { Container, Row, Col, Button, Card, Image } from 'react-bootstrap'
+import { Container, Row, Col, Button, Card, Image, Modal, Form } from 'react-bootstrap'
 import '../styles/jumbotron.css'
 import bgImage from '../assets/linkedin-background.jpg'
 
 const Jumbotron = () => {
   const [myData, setMyData] = useState({})
+  const [myDataUpdate, setMyDataUpdate] = useState(useState({
+    name: "",
+    surname: "",
+    email: "",
+    bio: "",
+    title: "",
+    area: ""
+  }))
+
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  /*"name": "Diego",
+  "surname": "Banovaz",
+  "email": "diego@strive.school",
+  "bio": "SW ENG",
+  "title": "COO @ Strive School",
+  "area": "Berlin",*/
 
   useEffect(() => {
     fetchMyProfile()
@@ -15,6 +36,7 @@ const Jumbotron = () => {
       const response = await fetch(
         'https://striveschool-api.herokuapp.com/api/profile/me',
         {
+          
           headers: {
             Authorization:
               'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQxNmM4MGQzMzk4NDAwMTVjODgzYjUiLCJpYXQiOjE2NDg0NTQ3OTksImV4cCI6MTY0OTY2NDM5OX0.JWs4GSyt7R0dtISwmer1bgb6M0m4ote627Y_T1Ze67s',
@@ -33,6 +55,32 @@ const Jumbotron = () => {
     }
   }
 
+  const fetchMyProfilePut = async () => {
+    try {
+      const response = await fetch(
+        'https://striveschool-api.herokuapp.com/api/profile/',
+        
+        {
+          method: "PUT",
+          body: JSON.stringify(myDataUpdate),
+          headers: {
+            Authorization:
+              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQxNmM4MGQzMzk4NDAwMTVjODgzYjUiLCJpYXQiOjE2NDg0NTQ3OTksImV4cCI6MTY0OTY2NDM5OX0.JWs4GSyt7R0dtISwmer1bgb6M0m4ote627Y_T1Ze67s',
+          },
+        },
+      )
+      if (response.ok) {
+        const data = await response.json()
+        console.log("put", data)
+        setMyDataUpdate(data)
+      } else {
+        console.log('fetch is not ok')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <>
       <Container fluid className="mt-4 jumbotron-container">
@@ -41,9 +89,99 @@ const Jumbotron = () => {
         </div>
         <Row className="edit-div px-4">
           <Image src={myData.image} roundedCircle />
-          <button>
+          <Button onClick={handleShow}>
             <i className="fa-solid fa-pen py-4 pr-3"></i>
-          </button>
+          </Button>
+          
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Intro</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+
+          <Form onSubmit={ fetchMyProfilePut}>
+
+          <Form.Group className="mb-3" >
+          <Form.Label>Name</Form.Label>
+          <Form.Control type="text" placeholder="Name" value={myDataUpdate.name}
+                onChange={(e) =>
+                  setMyDataUpdate({
+                    ...myDataUpdate,
+                    name: e.target.value,
+                  })
+                } />
+        </Form.Group>
+
+          <Form.Group className="mb-3" >
+          <Form.Label>Surname</Form.Label>
+          <Form.Control type="text" placeholder="Surname" value={myDataUpdate.surname}
+                onChange={(e) =>
+                  setMyDataUpdate({
+                    ...myDataUpdate,
+                    surname: e.target.value,
+                  })
+                } />
+        </Form.Group>
+
+        <Form.Group className="mb-3" >
+          <Form.Label>Email address</Form.Label>
+          <Form.Control type="email" placeholder="Enter email" value={myDataUpdate.email}
+                onChange={(e) =>
+                  setMyDataUpdate({
+                    ...myDataUpdate,
+                    email: e.target.value,
+                  })
+                }/>
+          <Form.Text className="text-muted">
+            We'll never share your email with anyone else.
+          </Form.Text>
+        </Form.Group>
+
+        <Form.Group className="mb-3" >
+          <Form.Label>Bio</Form.Label>
+          <Form.Control type="text" placeholder="Bio" value={myDataUpdate.bio}
+                onChange={(e) =>
+                  setMyDataUpdate({
+                    ...myDataUpdate,
+                    bio: e.target.value,
+                  })
+                }/>
+        </Form.Group>
+
+          <Form.Group className="mb-3" >
+          <Form.Label>Title</Form.Label>
+          <Form.Control type="text" placeholder="Title" value={myDataUpdate.title}
+                onChange={(e) =>
+                  setMyDataUpdate({
+                    ...myDataUpdate,
+                    title: e.target.value,
+                  })
+                }/>
+        </Form.Group>
+
+        <Form.Group className="mb-3" >
+          <Form.Label>Area</Form.Label>
+          <Form.Control type="text" placeholder="Area" value={myDataUpdate.area}
+                onChange={(e) =>
+                  setMyDataUpdate({
+                    ...myDataUpdate,
+                    area: e.target.value,
+                  })
+                }/>
+        </Form.Group>
+
+        <Button variant="primary" type="submit" onClick={handleClose}>
+          Edit
+        </Button>
+        <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+      </Form>
+
+      </Modal.Body>
+
+      </Modal>
+    
         </Row>
         <Row>
           <Col sm={12} md={6} className="name-div pl-5">
