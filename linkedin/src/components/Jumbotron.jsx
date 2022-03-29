@@ -357,7 +357,7 @@ const Jumbotron = () => {
         </div>
       </Container>
     </>
-  )
-}
+  );
+};
 
-export default Jumbotron
+export default Jumbotron;

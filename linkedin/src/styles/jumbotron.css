@@ -6,7 +6,6 @@ body {
 .activity-container,
 .experience-container,
 .education-container {
-  width: 60vw;
   background-color: white;
   border-radius: 8px;
   padding-left: 0;
