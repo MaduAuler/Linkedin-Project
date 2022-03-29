@@ -55,7 +55,7 @@ const Jumbotron = () => {
     }
   }
 
-  const fetchMyProfilePut = async () => {
+  const editProfile = async () => {
     try {
       const response = await fetch(
         'https://striveschool-api.herokuapp.com/api/profile/',
@@ -66,13 +66,13 @@ const Jumbotron = () => {
           headers: {
             Authorization:
               'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQxNmM4MGQzMzk4NDAwMTVjODgzYjUiLCJpYXQiOjE2NDg0NTQ3OTksImV4cCI6MTY0OTY2NDM5OX0.JWs4GSyt7R0dtISwmer1bgb6M0m4ote627Y_T1Ze67s',
+              "Content-Type": "application/json"
           },
         },
       )
       if (response.ok) {
-        const data = await response.json()
-        console.log("put", data)
-        setMyDataUpdate(data)
+        fetchMyProfile()
+        handleClose()
       } else {
         console.log('fetch is not ok')
       }
@@ -99,7 +99,7 @@ const Jumbotron = () => {
         </Modal.Header>
         <Modal.Body>
 
-          <Form onSubmit={ fetchMyProfilePut}>
+          <div>
 
           <Form.Group className="mb-3" >
           <Form.Label>Name</Form.Label>
@@ -170,13 +170,13 @@ const Jumbotron = () => {
                 }/>
         </Form.Group>
 
-        <Button variant="primary" type="submit" onClick={handleClose}>
+        <Button variant="primary" onClick={editProfile}>
           Edit
         </Button>
         <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-      </Form>
+      </div>
 
       </Modal.Body>
 
