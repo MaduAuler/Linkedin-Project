@@ -1,12 +1,5 @@
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  Card,
-  Image,
-} from 'react-bootstrap'
-import '../styles/jumbotron.css'
+import { Container, Row, Col, Button, Card, Image } from "react-bootstrap";
+import "../styles/jumbotron.css";
 
 const Jumbotron = () => {
   return (
@@ -189,7 +182,7 @@ const Jumbotron = () => {
         </div>
       </Container>
     </>
-  )
-}
+  );
+};
 
-export default Jumbotron
+export default Jumbotron;
