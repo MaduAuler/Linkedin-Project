@@ -1,23 +1,198 @@
-import { Container, Row, Col, Button, Card, Image } from "react-bootstrap";
-import "../styles/jumbotron.css";
+import { useState, useEffect } from 'react'
+import { Container, Row, Col, Button, Card, Image, Modal, Form } from 'react-bootstrap'
+import '../styles/jumbotron.css'
+import bgImage from '../assets/linkedin-background.jpg'
+import { useParams } from 'react-router-dom'
 
 const Jumbotron = () => {
+  const {userId} = useParams()
+  const [myData, setMyData] = useState({})
+  const [myDataUpdate, setMyDataUpdate] = useState(useState({
+    name: "",
+    surname: "",
+    email: "",
+    bio: "",
+    title: "",
+    area: ""
+  }))
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+
+
+
+  useEffect(() => {
+    if(userId==="me") {
+      fetchMyProfile("me")
+    } else {
+      fetchMyProfile(userId)
+    }
+  
+  }, [])
+
+  const fetchMyProfile = async (param) => {
+    try {
+      const response = await fetch(
+        'https://striveschool-api.herokuapp.com/api/profile/'+param,
+        {
+          
+          headers: {
+            Authorization:
+              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQxNmM4MGQzMzk4NDAwMTVjODgzYjUiLCJpYXQiOjE2NDg0NTQ3OTksImV4cCI6MTY0OTY2NDM5OX0.JWs4GSyt7R0dtISwmer1bgb6M0m4ote627Y_T1Ze67s',
+          },
+        },
+      )
+      if (response.ok) {
+        const data = await response.json()
+        console.log(data)
+        setMyData(data)
+      } else {
+        console.log('fetch is not ok')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const editProfile = async () => {
+    try {
+      const response = await fetch(
+        'https://striveschool-api.herokuapp.com/api/profile/',
+        
+        {
+          method: "PUT",
+          body: JSON.stringify(myDataUpdate),
+          headers: {
+            Authorization:
+              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQxNmM4MGQzMzk4NDAwMTVjODgzYjUiLCJpYXQiOjE2NDg0NTQ3OTksImV4cCI6MTY0OTY2NDM5OX0.JWs4GSyt7R0dtISwmer1bgb6M0m4ote627Y_T1Ze67s',
+              "Content-Type": "application/json"
+          },
+        },
+      )
+      if (response.ok) {
+        fetchMyProfile()
+        handleClose()
+      } else {
+        console.log('fetch is not ok')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <>
       <Container fluid className="mt-4 jumbotron-container">
-        <div className="bg-div">
-          <i class="fa-solid fa-camera"></i>
+        <div className="bg-div" style={{ backgroundImage: `url(${bgImage})` }}>
+          <i className="fa-solid fa-camera"></i>
         </div>
         <Row className="edit-div px-4">
-          <Image src="http://placekitten.com/150/150" roundedCircle />
-          <i className="fa-solid fa-pen py-4 pr-3"></i>
+          <Image src={myData.image} roundedCircle />
+          <Button onClick={handleShow}>
+            <i className="fa-solid fa-pen py-4 pr-3"></i>
+          </Button>
+          
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Intro</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+
+          <div>
+
+          <Form.Group className="mb-3" >
+          <Form.Label>Name</Form.Label>
+          <Form.Control type="text" placeholder="Name" value={myDataUpdate.name}
+                onChange={(e) =>
+                  setMyDataUpdate({
+                    ...myDataUpdate,
+                    name: e.target.value,
+                  })
+                } />
+        </Form.Group>
+
+          <Form.Group className="mb-3" >
+          <Form.Label>Surname</Form.Label>
+          <Form.Control type="text" placeholder="Surname" value={myDataUpdate.surname}
+                onChange={(e) =>
+                  setMyDataUpdate({
+                    ...myDataUpdate,
+                    surname: e.target.value,
+                  })
+                } />
+        </Form.Group>
+
+        <Form.Group className="mb-3" >
+          <Form.Label>Email address</Form.Label>
+          <Form.Control type="email" placeholder="Enter email" value={myDataUpdate.email}
+                onChange={(e) =>
+                  setMyDataUpdate({
+                    ...myDataUpdate,
+                    email: e.target.value,
+                  })
+                }/>
+          <Form.Text className="text-muted">
+            We'll never share your email with anyone else.
+          </Form.Text>
+        </Form.Group>
+
+        <Form.Group className="mb-3" >
+          <Form.Label>Bio</Form.Label>
+          <Form.Control type="text" placeholder="Bio" value={myDataUpdate.bio}
+                onChange={(e) =>
+                  setMyDataUpdate({
+                    ...myDataUpdate,
+                    bio: e.target.value,
+                  })
+                }/>
+        </Form.Group>
+
+          <Form.Group className="mb-3" >
+          <Form.Label>Title</Form.Label>
+          <Form.Control type="text" placeholder="Title" value={myDataUpdate.title}
+                onChange={(e) =>
+                  setMyDataUpdate({
+                    ...myDataUpdate,
+                    title: e.target.value,
+                  })
+                }/>
+        </Form.Group>
+
+        <Form.Group className="mb-3" >
+          <Form.Label>Area</Form.Label>
+          <Form.Control type="text" placeholder="Area" value={myDataUpdate.area}
+                onChange={(e) =>
+                  setMyDataUpdate({
+                    ...myDataUpdate,
+                    area: e.target.value,
+                  })
+                }/>
+        </Form.Group>
+
+        <Button variant="primary" onClick={editProfile}>
+          Edit
+        </Button>
+        <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+      </div>
+
+      </Modal.Body>
+
+      </Modal>
+    
         </Row>
         <Row>
           <Col sm={12} md={6} className="name-div pl-5">
-            <h3 className="mb-0">name</h3>
-            <h5 className="mb-0">occupation</h5>
+            <h3 className="mb-0">
+              {myData.name} {myData.surname}
+            </h3>
+            <h5 className="mb-0">{myData.title}</h5>
             <p className="mb-0">
-              city, country・<span>Contact info</span>
+              {myData.area}・<span>Contact info</span>
             </p>
             <p className="my-2">
               <span>connections</span>
@@ -88,7 +263,7 @@ const Jumbotron = () => {
         <hr className="my-2" />
         <div className="bottom-div">
           <h6 className="pb-2 d-inline-block">Show all activity</h6>
-          <i class="fa-solid fa-arrow-right-long d-inline-block ml-2"></i>
+          <i className="fa-solid fa-arrow-right-long d-inline-block ml-2"></i>
         </div>
       </Container>
 
@@ -98,7 +273,7 @@ const Jumbotron = () => {
             <h5 className="mb-0">Experience</h5>
           </Col>
           <Col sm={12} md={6} pr-5 className="d-flex education-div pr-5">
-            <i class="fa-solid fa-plus mr-3"></i>
+            <i className="fa-solid fa-plus mr-3"></i>
             <i className="fa-solid fa-pen"></i>
           </Col>
         </Row>
@@ -140,7 +315,7 @@ const Jumbotron = () => {
         <hr className="my-3" />
         <div className="bottom-div">
           <h6 className="pb-2 d-inline-block">Show all experiences</h6>
-          <i class="fa-solid fa-arrow-right-long d-inline-block ml-2"></i>
+          <i className="fa-solid fa-arrow-right-long d-inline-block ml-2"></i>
         </div>
       </Container>
 
@@ -150,7 +325,7 @@ const Jumbotron = () => {
             <h5 className="mb-0">Education</h5>
           </Col>
           <Col sm={12} md={6} pr-5 className="d-flex education-div pr-5">
-            <i class="fa-solid fa-plus mr-3"></i>
+            <i className="fa-solid fa-plus mr-3"></i>
             <i className="fa-solid fa-pen"></i>
           </Col>
         </Row>
@@ -178,7 +353,7 @@ const Jumbotron = () => {
         <hr className="my-3" />
         <div className="bottom-div">
           <h6 className="pb-2 d-inline-block">Show all experiences</h6>
-          <i class="fa-solid fa-arrow-right-long d-inline-block ml-2"></i>
+          <i className="fa-solid fa-arrow-right-long d-inline-block ml-2"></i>
         </div>
       </Container>
     </>

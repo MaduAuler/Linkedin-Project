@@ -14,7 +14,6 @@ body {
 
 /* jumbotron-container */
 .bg-div {
-  background-image: url(http://placekitten.com/800/200);
   border-radius: 8px;
   height: 20vh;
   position: relative;
@@ -45,6 +44,12 @@ body {
   left: 50px;
   bottom: 0;
   border: 5px solid white;
+  width: 150px;
+}
+
+.edit-div button {
+  border: none;
+  background-color: white;
 }
 
 .name-div {
