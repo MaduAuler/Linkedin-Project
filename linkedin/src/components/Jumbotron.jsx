@@ -1,30 +1,58 @@
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  Card,
-  Image,
-} from 'react-bootstrap'
+import { useState, useEffect } from 'react'
+import { Container, Row, Col, Button, Card, Image } from 'react-bootstrap'
 import '../styles/jumbotron.css'
+import bgImage from '../assets/linkedin-background.jpg'
 
 const Jumbotron = () => {
+  const [myData, setMyData] = useState({})
+
+  useEffect(() => {
+    fetchMyProfile()
+  }, [])
+
+  const fetchMyProfile = async () => {
+    try {
+      const response = await fetch(
+        'https://striveschool-api.herokuapp.com/api/profile/me',
+        {
+          headers: {
+            Authorization:
+              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQxNmM4MGQzMzk4NDAwMTVjODgzYjUiLCJpYXQiOjE2NDg0NTQ3OTksImV4cCI6MTY0OTY2NDM5OX0.JWs4GSyt7R0dtISwmer1bgb6M0m4ote627Y_T1Ze67s',
+          },
+        },
+      )
+      if (response.ok) {
+        const data = await response.json()
+        console.log(data)
+        setMyData(data)
+      } else {
+        console.log('fetch is not ok')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <>
       <Container fluid className="mt-4 jumbotron-container">
-        <div className="bg-div">
-          <i class="fa-solid fa-camera"></i>
+        <div className="bg-div" style={{ backgroundImage: `url(${bgImage})` }}>
+          <i className="fa-solid fa-camera"></i>
         </div>
         <Row className="edit-div px-4">
-          <Image src="http://placekitten.com/150/150" roundedCircle />
-          <i className="fa-solid fa-pen py-4 pr-3"></i>
+          <Image src={myData.image} roundedCircle />
+          <button>
+            <i className="fa-solid fa-pen py-4 pr-3"></i>
+          </button>
         </Row>
         <Row>
           <Col sm={12} md={6} className="name-div pl-5">
-            <h3 className="mb-0">name</h3>
-            <h5 className="mb-0">occupation</h5>
+            <h3 className="mb-0">
+              {myData.name} {myData.surname}
+            </h3>
+            <h5 className="mb-0">{myData.title}</h5>
             <p className="mb-0">
-              city, country・<span>Contact info</span>
+              {myData.area}・<span>Contact info</span>
             </p>
             <p className="my-2">
               <span>connections</span>
@@ -95,7 +123,7 @@ const Jumbotron = () => {
         <hr className="my-2" />
         <div className="bottom-div">
           <h6 className="pb-2 d-inline-block">Show all activity</h6>
-          <i class="fa-solid fa-arrow-right-long d-inline-block ml-2"></i>
+          <i className="fa-solid fa-arrow-right-long d-inline-block ml-2"></i>
         </div>
       </Container>
 
@@ -105,7 +133,7 @@ const Jumbotron = () => {
             <h5 className="mb-0">Experience</h5>
           </Col>
           <Col sm={12} md={6} pr-5 className="d-flex education-div pr-5">
-            <i class="fa-solid fa-plus mr-3"></i>
+            <i className="fa-solid fa-plus mr-3"></i>
             <i className="fa-solid fa-pen"></i>
           </Col>
         </Row>
@@ -147,7 +175,7 @@ const Jumbotron = () => {
         <hr className="my-3" />
         <div className="bottom-div">
           <h6 className="pb-2 d-inline-block">Show all experiences</h6>
-          <i class="fa-solid fa-arrow-right-long d-inline-block ml-2"></i>
+          <i className="fa-solid fa-arrow-right-long d-inline-block ml-2"></i>
         </div>
       </Container>
 
@@ -157,7 +185,7 @@ const Jumbotron = () => {
             <h5 className="mb-0">Education</h5>
           </Col>
           <Col sm={12} md={6} pr-5 className="d-flex education-div pr-5">
-            <i class="fa-solid fa-plus mr-3"></i>
+            <i className="fa-solid fa-plus mr-3"></i>
             <i className="fa-solid fa-pen"></i>
           </Col>
         </Row>
@@ -185,7 +213,7 @@ const Jumbotron = () => {
         <hr className="my-3" />
         <div className="bottom-div">
           <h6 className="pb-2 d-inline-block">Show all experiences</h6>
-          <i class="fa-solid fa-arrow-right-long d-inline-block ml-2"></i>
+          <i className="fa-solid fa-arrow-right-long d-inline-block ml-2"></i>
         </div>
       </Container>
     </>
