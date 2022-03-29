@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react'
 import { Container, Row, Col, Button, Card, Image, Modal, Form } from 'react-bootstrap'
 import '../styles/jumbotron.css'
 import bgImage from '../assets/linkedin-background.jpg'
+import { useParams } from 'react-router-dom'
 
 const Jumbotron = () => {
+  const {userId} = useParams()
   const [myData, setMyData] = useState({})
   const [myDataUpdate, setMyDataUpdate] = useState(useState({
     name: "",
@@ -14,27 +16,27 @@ const Jumbotron = () => {
     area: ""
   }))
 
-
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  /*"name": "Diego",
-  "surname": "Banovaz",
-  "email": "diego@strive.school",
-  "bio": "SW ENG",
-  "title": "COO @ Strive School",
-  "area": "Berlin",*/
+
+
 
   useEffect(() => {
-    fetchMyProfile()
+    if(userId==="me") {
+      fetchMyProfile("me")
+    } else {
+      fetchMyProfile(userId)
+    }
+  
   }, [])
 
-  const fetchMyProfile = async () => {
+  const fetchMyProfile = async (param) => {
     try {
       const response = await fetch(
-        'https://striveschool-api.herokuapp.com/api/profile/me',
+        'https://striveschool-api.herokuapp.com/api/profile/'+param,
         {
           
           headers: {
