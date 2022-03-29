@@ -1,10 +1,10 @@
 import "./Sidebar.css";
 import { useEffect, useState } from "react";
 import { Container, Row, Image, Button } from "react-bootstrap";
-
+import {Link} from 'react-router-dom'
 import { BsQuestionCircleFill } from "react-icons/bs";
 
-const MySidebar = () => {
+const SideBar = () => {
   const [profiles, setProfiles] = useState({});
 
   useEffect(() => {
@@ -36,34 +36,35 @@ const MySidebar = () => {
 
   return (
     <>
-      <div className="sidebar mt-4">
-        <div className="sidebar_stats">
-          <div className="sidebar_stat">
-            <p>Edit public profile & URL</p>
-            <p className="stat_number">
-              <BsQuestionCircleFill style={{ color: "#707070" }} />
+    <div className="mt-4 sidebar-people-container ">
+          <div className="d-flex justify-content-between align-items-center">
+            <p className="sidebar-top-text mt-2 ">Edit public profile & URL</p>
+            <p >
+              <BsQuestionCircleFill className="mr-4 "style={{ color: "#707070" }} />
             </p>
           </div>
-          <div className="sidebar_stat">
-            <p>Views on post</p>
-            <p className="stat_number">
-              <BsQuestionCircleFill style={{ color: "#707070" }} />
+          <hr/>
+          <div className="d-flex ml-2 justify-content-between align-items-center" >
+            <p className="sidebar-top-text">Views on post</p>
+            <p >
+              <BsQuestionCircleFill className="mr-4 "style={{ color: "#707070" }} />
             </p>
           </div>
-        </div>
-      </div>
+    </div>
 
-      <Container fluid className="mt-4 sidebar">
+      <div className="mt-4 sidebar-people-container">
         <Row className="py-4 ml-3">
           <h5 className="mb-0">People also viewed</h5>
         </Row>
         {Object.keys(profiles)
-          .map((profile, i) => {
+          .map((profile) => {
             return (
-              <>
-                <Row className="d-flex">
-                  <div className="ml-3">
-                    <Image src={profiles[profile].image} className="mr-2" />
+             
+                
+                <Row className="d-flex mb-2">
+                 
+                  <div className="ml-3 mb-5">
+                    <Link to={"/profile/"+ profiles[profile]._id}><Image src={profiles[profile].image} className="mr-2" style={{height: "50px"}} /></Link>
                   </div>
                   <div className="pl-1 text-left">
                     <h6 className="mb-0">
@@ -72,19 +73,21 @@ const MySidebar = () => {
                     <p className="mb-0">{profiles[profile].title}</p>
                     <Button>Connect</Button>
                   </div>
+
                 </Row>
-              </>
+                
+              
             );
           })
-          .slice(0, 10)}
+          .slice(0, 9)}
         <hr className="my-3" />
-        <div className="bottom-div">
+        <div className="bottom-div d-flex justify-content-center">
           <h6 className="pb-2 d-inline-block">Show more</h6>
-          <i className="fa-solid fa-arrow-down d-inline-block ml-2"></i>
+          <i className="fa-solid fa-arrow-down d-inline-block ml-2 mt-1"></i>
         </div>
-      </Container>
-    </>
+      </div>
+      </>
   );
 };
 
-export default MySidebar;
+export default SideBar;
