@@ -3,6 +3,7 @@ import { Container, Row, Col, Button, Card, Image, Modal, Form } from 'react-boo
 import '../styles/jumbotron.css'
 import bgImage from '../assets/linkedin-background.jpg'
 import { useParams } from 'react-router-dom'
+import { FiEdit2 } from "react-icons/fi";
 
 const Jumbotron = () => {
   const {userId} = useParams()
@@ -31,7 +32,7 @@ const Jumbotron = () => {
       fetchMyProfile(userId)
     }
   
-  }, [])
+  }, [userId])
 
   const fetchMyProfile = async (param) => {
     try {
@@ -85,15 +86,15 @@ const Jumbotron = () => {
 
   return (
     <>
-      <Container fluid className="mt-4 jumbotron-container">
+      <Container className="mt-4 jumbotron-container">
         <div className="bg-div" style={{ backgroundImage: `url(${bgImage})` }}>
           <i className="fa-solid fa-camera"></i>
         </div>
         <Row className="edit-div px-4">
           <Image src={myData.image} roundedCircle />
-          <Button onClick={handleShow}>
-            <i className="fa-solid fa-pen py-4 pr-3"></i>
-          </Button>
+          <button onClick={handleShow} className="button-container">
+            <FiEdit2 className='button-edit mt-2'/>
+          </button>
           
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -198,10 +199,7 @@ const Jumbotron = () => {
               <span>connections</span>
             </p>
           </Col>
-          <Col sm={12} md={6} pr-5 className="d-flex education-div pr-5">
-            <Image src="http://placekitten.com/30/30" className="mr-2" />
-            <p>education</p>
-          </Col>
+        
         </Row>
         <Row className=" mb-4 buttons ml-5">
           <Button variant="primary">Open to</Button>
@@ -240,7 +238,7 @@ const Jumbotron = () => {
         </Row>
       </Container>
 
-      <Container fluid className="mt-4 activity-container">
+      <Container className="mt-4 activity-container">
         <Row className="pt-4">
           <Col sm={12} md={6} className="name-div pl-5">
             <h5 className="mb-0">Activity</h5>
@@ -261,13 +259,13 @@ const Jumbotron = () => {
           </div>
         </Row>
         <hr className="my-2" />
-        <div className="bottom-div">
+        <div className="bottom-div  d-flex justify-content-center">
           <h6 className="pb-2 d-inline-block">Show all activity</h6>
-          <i className="fa-solid fa-arrow-right-long d-inline-block ml-2"></i>
+          <i className="fa-solid fa-arrow-right-long d-inline-block ml-2 mt-1"></i>
         </div>
       </Container>
 
-      <Container fluid className="mt-4 experience-container">
+      <Container className="mt-4 experience-container">
         <Row className="py-4">
           <Col sm={12} md={6} className="name-div pl-5">
             <h5 className="mb-0">Experience</h5>
@@ -313,13 +311,13 @@ const Jumbotron = () => {
           </div>
         </Row>
         <hr className="my-3" />
-        <div className="bottom-div">
+        <div className="bottom-div  d-flex justify-content-center">
           <h6 className="pb-2 d-inline-block">Show all experiences</h6>
-          <i className="fa-solid fa-arrow-right-long d-inline-block ml-2"></i>
+          <i className="fa-solid fa-arrow-right-long d-inline-block ml-2 mt-1"></i>
         </div>
       </Container>
 
-      <Container fluid className="mt-4 education-container">
+      <Container className="mt-4 education-container">
         <Row className="py-4">
           <Col sm={12} md={6} className="name-div pl-5">
             <h5 className="mb-0">Education</h5>
@@ -351,9 +349,9 @@ const Jumbotron = () => {
           </div>
         </Row>
         <hr className="my-3" />
-        <div className="bottom-div">
+        <div className="bottom-div  d-flex justify-content-center">
           <h6 className="pb-2 d-inline-block">Show all experiences</h6>
-          <i className="fa-solid fa-arrow-right-long d-inline-block ml-2"></i>
+          <i className="fa-solid fa-arrow-right-long d-inline-block ml-2 mt-1"></i>
         </div>
       </Container>
     </>

@@ -10,11 +10,11 @@ function App() {
   return (
     <BrowserRouter>
     <NavBar />
-    <Routes>
-      
+
+      <Routes>
       <Route path="/profile/:userId" element={<ProfilePage/>} />
-     
       </Routes>
+
       <MyFooter />
     </BrowserRouter>
   );

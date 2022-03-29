@@ -144,3 +144,8 @@ body {
 .row {
   margin: 0;
 }
+
+.button-edit {
+  color: black;
+  font-size: 1.5rem;
+}
