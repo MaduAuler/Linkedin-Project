@@ -1,16 +1,22 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import MyFooter from "./components/Footer";
-import Jumbotron from "./components/Jumbotron";
+
 import NavBar from "./components/NavBar";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ProfilePage from "./pages/Profile";
 
 function App() {
   return (
-    <div className="App">
-      <NavBar />
-      <Jumbotron />
-      <MyFooter />;
-    </div>
+    <BrowserRouter>
+    <NavBar />
+    <Routes>
+      
+      <Route path="/profile/:userId" element={<ProfilePage/>} />
+     
+      </Routes>
+      <MyFooter />
+    </BrowserRouter>
   );
 }
 
