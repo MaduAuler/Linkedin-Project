@@ -99,3 +99,24 @@
   margin-right: 10px;
   margin-left: 10px;
 }
+
+.sidebar-people-container {
+  background-color: white;
+  border-radius: 8px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.sidebar-people-container img {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+.sidebar-people-container button {
+  border-radius: 20px;
+  background-color: white;
+  color: grey;
+  border-color: grey;
+  font-weight: 600;
+}

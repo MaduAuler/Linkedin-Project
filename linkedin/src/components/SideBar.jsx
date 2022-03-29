@@ -1,5 +1,6 @@
 import "./Sidebar.css";
 import { useEffect, useState } from "react";
+import { Container, Row, Image, Button } from "react-bootstrap";
 
 import { BsQuestionCircleFill } from "react-icons/bs";
 
@@ -52,14 +53,36 @@ const MySidebar = () => {
         </div>
       </div>
 
-      <div className="sidebar mt-4">
-        <div className="sidebar_stats">
-          <div className="sidebar_stat"></div>
-          {profiles.map((profile, i) => {
-            <div>{profile[i].name}</div>;
-          })}
+      <Container fluid className="mt-4 sidebar">
+        <Row className="py-4 ml-3">
+          <h5 className="mb-0">People also viewed</h5>
+        </Row>
+        {Object.keys(profiles)
+          .map((profile, i) => {
+            return (
+              <>
+                <Row className="d-flex">
+                  <div className="ml-3">
+                    <Image src={profiles[profile].image} className="mr-2" />
+                  </div>
+                  <div className="pl-1 text-left">
+                    <h6 className="mb-0">
+                      {profiles[profile].name}, {profiles[profile].surname}
+                    </h6>
+                    <p className="mb-0">{profiles[profile].title}</p>
+                    <Button>Connect</Button>
+                  </div>
+                </Row>
+              </>
+            );
+          })
+          .slice(0, 10)}
+        <hr className="my-3" />
+        <div className="bottom-div">
+          <h6 className="pb-2 d-inline-block">Show more</h6>
+          <i className="fa-solid fa-arrow-down d-inline-block ml-2"></i>
         </div>
-      </div>
+      </Container>
     </>
   );
 };
