@@ -18,6 +18,7 @@ import { RiMessage3Fill } from "react-icons/ri";
 import person from "../person.jpg";
 import { Link } from "react-router-dom";
 
+
 const NavBar = () => {
   return (
     <div className="flex-container d-flex align-items-center ">

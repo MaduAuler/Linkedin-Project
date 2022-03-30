@@ -12,15 +12,9 @@ function App()
   return (
     <BrowserRouter>
       <NavBar />
-<<<<<<< HEAD
-
       <Routes>
         <Route path="/profile/:userId" element={<ProfilePage />} />
         <Route path="/posts" element={<FeedPage />} />
-=======
-      <Routes>
-        <Route path="/profile/:userId" element={<ProfilePage />} />
->>>>>>> master
       </Routes>
       <MyFooter />
     </BrowserRouter>

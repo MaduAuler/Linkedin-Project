@@ -1,6 +1,6 @@
-import "../styles/Sidebar.css";
+import "../styles/SideBar.css";
 import { useEffect, useState } from "react";
-import { Container, Row, Image, Button } from "react-bootstrap";
+import { Row, Image, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { BsQuestionCircleFill } from "react-icons/bs";
 
