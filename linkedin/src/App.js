@@ -5,14 +5,17 @@ import MyFooter from "./components/Footer";
 import NavBar from "./components/NavBar";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProfilePage from "./pages/Profile";
+import FeedPage from './pages/FeedPage'
 
-function App() {
+function App()
+{
   return (
     <BrowserRouter>
-    <NavBar />
+      <NavBar />
 
       <Routes>
-      <Route path="/profile/:userId" element={<ProfilePage/>} />
+        <Route path="/profile/:userId" element={<ProfilePage />} />
+        <Route path="/posts" element={<FeedPage />} />
       </Routes>
 
       <MyFooter />
