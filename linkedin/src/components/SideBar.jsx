@@ -1,7 +1,7 @@
-import "./Sidebar.css";
+import "../styles/Sidebar.css";
 import { useEffect, useState } from "react";
 import { Container, Row, Image, Button } from "react-bootstrap";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
 import { BsQuestionCircleFill } from "react-icons/bs";
 
 const SideBar = () => {
@@ -36,21 +36,27 @@ const SideBar = () => {
 
   return (
     <>
-    <div className="mt-4 sidebar-people-container ">
-          <div className="d-flex justify-content-between align-items-center">
-            <p className="sidebar-top-text mt-2 ">Edit public profile & URL</p>
-            <p >
-              <BsQuestionCircleFill className="mr-4 "style={{ color: "#707070" }} />
-            </p>
-          </div>
-          <hr/>
-          <div className="d-flex ml-2 justify-content-between align-items-center" >
-            <p className="sidebar-top-text">Views on post</p>
-            <p >
-              <BsQuestionCircleFill className="mr-4 "style={{ color: "#707070" }} />
-            </p>
-          </div>
-    </div>
+      <div className="mt-4 sidebar-people-container ">
+        <div className="d-flex justify-content-between align-items-center">
+          <p className="sidebar-top-text mt-2 ">Edit public profile & URL</p>
+          <p>
+            <BsQuestionCircleFill
+              className="mr-4 "
+              style={{ color: "#707070" }}
+            />
+          </p>
+        </div>
+        <hr />
+        <div className="d-flex ml-2 justify-content-between align-items-center">
+          <p className="sidebar-top-text">Views on post</p>
+          <p>
+            <BsQuestionCircleFill
+              className="mr-4 "
+              style={{ color: "#707070" }}
+            />
+          </p>
+        </div>
+      </div>
 
       <div className="mt-4 sidebar-people-container">
         <Row className="py-4 ml-3">
@@ -59,24 +65,24 @@ const SideBar = () => {
         {Object.keys(profiles)
           .map((profile) => {
             return (
-             
-                
-                <Row className="d-flex mb-2">
-                 
-                  <div className="ml-3 mb-5">
-                    <Link to={"/profile/"+ profiles[profile]._id}><Image src={profiles[profile].image} className="mr-2" style={{height: "50px"}} /></Link>
-                  </div>
-                  <div className="pl-1 text-left">
-                    <h6 className="mb-0">
-                      {profiles[profile].name}, {profiles[profile].surname}
-                    </h6>
-                    <p className="mb-0">{profiles[profile].title}</p>
-                    <Button>Connect</Button>
-                  </div>
-
-                </Row>
-                
-              
+              <Row className="d-flex mb-2">
+                <div className="ml-3 mb-5">
+                  <Link to={"/profile/" + profiles[profile]._id}>
+                    <Image
+                      src={profiles[profile].image}
+                      className="mr-2"
+                      style={{ height: "50px" }}
+                    />
+                  </Link>
+                </div>
+                <div className="pl-1 text-left">
+                  <h6 className="mb-0">
+                    {profiles[profile].name}, {profiles[profile].surname}
+                  </h6>
+                  <p className="mb-0">{profiles[profile].title}</p>
+                  <Button>Connect</Button>
+                </div>
+              </Row>
             );
           })
           .slice(0, 9)}
@@ -86,7 +92,7 @@ const SideBar = () => {
           <i className="fa-solid fa-arrow-down d-inline-block ml-2 mt-1"></i>
         </div>
       </div>
-      </>
+    </>
   );
 };
 
