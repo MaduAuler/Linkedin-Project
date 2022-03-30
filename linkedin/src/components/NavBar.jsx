@@ -5,13 +5,13 @@ import {
   InputGroup,
   DropdownButton,
 } from "react-bootstrap";
-import "./NavBar.css";
+import "../styles/NavBar.css";
 import {
   BsLinkedin,
   BsPeopleFill,
   BsFillGrid3X3GapFill,
   BsSearch,
-  BsFillCaretDownFill
+  BsFillCaretDownFill,
 } from "react-icons/bs";
 import { HiHome } from "react-icons/hi";
 import { MdWork, MdNotifications } from "react-icons/md";
@@ -61,84 +61,86 @@ const NavBar = () => {
             <p className="icon-text">Notifications</p>
           </button>
           <DropdownButton
-                variant="outline-secondary"
-                title={
-                  <div className="d-flex flex-column h-100 ">
-                    <img src={person} className="round" style={{height:"25px", width:"25px"}} />
-                    <div className="d-flex justify-content-center align-items-center arrow">
-                           <span className="arrow">Me</span>
-                           <BsFillCaretDownFill className="arrow"/>
-                    </div>
-                 
-                  </div>
-                }
-                id="input-group-dropdown-1"
-                className="dropdown-button h-100 "
-              >
-                {" "}
-                <div className="d-flex align-items-center justify-content-center h-100">
-                  <div>
-                    <img
-                      src={person}
-                      className="round mr-2"
-                      style={{ height: "50px", width:"50px" }}
-                    ></img>
-                  </div>
-                  <div>
-                    {" "}
-                    <h5>Jonas</h5> <p>Front-End </p>
-                  </div>
+            variant="outline-secondary"
+            title={
+              <div className="d-flex flex-column h-100 ">
+                <img
+                  src={person}
+                  className="round"
+                  style={{ height: "25px", width: "25px" }}
+                />
+                <div className="d-flex justify-content-center align-items-center arrow">
+                  <span className="arrow">Me</span>
+                  <BsFillCaretDownFill className="arrow" />
                 </div>
-                <button className="button-inside-dropdown">View Profile</button>
-                <Dropdown.Divider />
-                <div className="text-dropdown"> Account</div>
-                <Dropdown.Item href="#">Setting & Privacy</Dropdown.Item>
-                <Dropdown.Item href="#">Help</Dropdown.Item>
-                <Dropdown.Item href="#">Language</Dropdown.Item>
-                <Dropdown.Divider />
-                <div className="text-dropdown"> Menage</div>
-                <Dropdown.Item href="#">Post & Activity</Dropdown.Item>
-                <Dropdown.Item href="#">Job Posting Account</Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item href="#">Sign out</Dropdown.Item>
-              </DropdownButton>
+              </div>
+            }
+            id="input-group-dropdown-1"
+            className="dropdown-button h-100 "
+          >
+            {" "}
+            <div className="d-flex align-items-center justify-content-center h-100">
+              <div>
+                <img
+                  src={person}
+                  className="round mr-2"
+                  style={{ height: "50px", width: "50px" }}
+                ></img>
+              </div>
+              <div>
+                {" "}
+                <h5>Jonas</h5> <p>Front-End </p>
+              </div>
+            </div>
+            <button className="button-inside-dropdown">View Profile</button>
+            <Dropdown.Divider />
+            <div className="text-dropdown"> Account</div>
+            <Dropdown.Item href="#">Setting & Privacy</Dropdown.Item>
+            <Dropdown.Item href="#">Help</Dropdown.Item>
+            <Dropdown.Item href="#">Language</Dropdown.Item>
+            <Dropdown.Divider />
+            <div className="text-dropdown"> Menage</div>
+            <Dropdown.Item href="#">Post & Activity</Dropdown.Item>
+            <Dropdown.Item href="#">Job Posting Account</Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Item href="#">Sign out</Dropdown.Item>
+          </DropdownButton>
 
-       
-         
-         
           <div className="vr mr-4"></div>
           <DropdownButton
-                variant="outline-secondary"
-                title={
-                  <div className="d-flex flex-column h-100 align-items-center">
-                    <BsFillGrid3X3GapFill className="icon-grid"/>
-                    <div className="d-flex justify-content-center align-items-center ">
-                           <span>Work</span>
-                           <BsFillCaretDownFill />
-                    </div>
-                 
-                  </div>
-                }
-                id="input-group-dropdown-1"
-                className="dropdown-button h-100 drop2"
-              >
-    
-        
-             
-                <button className="button-inside-dropdown">View Profile</button>
-                <Dropdown.Divider />
-                <div className="text-dropdown"> Account</div>
-                <Dropdown.Item href="#">Setting & Privacy</Dropdown.Item>
-                <Dropdown.Item href="#">Help</Dropdown.Item>
-                <Dropdown.Item href="#">Language</Dropdown.Item>
-                <Dropdown.Divider />
-                <div className="text-dropdown"> Menage</div>
-                <Dropdown.Item href="#">Post & Activity</Dropdown.Item>
-                <Dropdown.Item href="#">Job Posting Account</Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item href="#">Sign out</Dropdown.Item>
-              </DropdownButton>
-          <p className="icon-text text-center ml-3" style={{color:'#966e39'}}> Try Premium for free</p>
+            variant="outline-secondary"
+            title={
+              <div className="d-flex flex-column h-100 align-items-center">
+                <BsFillGrid3X3GapFill className="icon-grid" />
+                <div className="d-flex justify-content-center align-items-center ">
+                  <span>Work</span>
+                  <BsFillCaretDownFill />
+                </div>
+              </div>
+            }
+            id="input-group-dropdown-1"
+            className="dropdown-button h-100 drop2"
+          >
+            <button className="button-inside-dropdown">View Profile</button>
+            <Dropdown.Divider />
+            <div className="text-dropdown"> Account</div>
+            <Dropdown.Item href="#">Setting & Privacy</Dropdown.Item>
+            <Dropdown.Item href="#">Help</Dropdown.Item>
+            <Dropdown.Item href="#">Language</Dropdown.Item>
+            <Dropdown.Divider />
+            <div className="text-dropdown"> Menage</div>
+            <Dropdown.Item href="#">Post & Activity</Dropdown.Item>
+            <Dropdown.Item href="#">Job Posting Account</Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Item href="#">Sign out</Dropdown.Item>
+          </DropdownButton>
+          <p
+            className="icon-text text-center ml-3"
+            style={{ color: "#966e39" }}
+          >
+            {" "}
+            Try Premium for free
+          </p>
         </div>
       </Container>
     </div>

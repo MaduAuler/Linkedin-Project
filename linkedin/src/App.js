@@ -9,12 +9,10 @@ import ProfilePage from "./pages/Profile";
 function App() {
   return (
     <BrowserRouter>
-    <NavBar />
-
+      <NavBar />
       <Routes>
-      <Route path="/profile/:userId" element={<ProfilePage/>} />
+        <Route path="/profile/:userId" element={<ProfilePage />} />
       </Routes>
-
       <MyFooter />
     </BrowserRouter>
   );

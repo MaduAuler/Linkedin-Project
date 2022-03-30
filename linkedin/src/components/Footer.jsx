@@ -1,6 +1,6 @@
 import { Row, Col, Image } from "react-bootstrap";
 import { BsFillQuestionCircleFill, BsGearFill } from "react-icons/bs";
-import "./Footer.css";
+import "../styles/Footer.css";
 
 import Logo from "../assets/LI-Logo.png";
 
