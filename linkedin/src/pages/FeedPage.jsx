@@ -108,22 +108,38 @@ const FeedPage = () => {
               </Row>
               <hr />
               <Row className="feed-reaction justify-content-around">
-                <div className="d-flex">
-                  <AiOutlineLike className="feed-icon" />
-                  <p className="">Like</p>
-                </div>
-                <div className="d-flex">
-                  <FaRegCommentDots className="feed-icon" />
-                  <p className="ml-2">Comment</p>
-                </div>
-                <div className="d-flex">
-                  <BsArrow90DegRight className="feed-icon" />
-                  <p className="ml-2">Comment</p>
-                </div>
-                <div className="d-flex">
-                  <RiSendPlaneFill className="feed-icon" />
-                  <p className="ml-2">Send</p>
-                </div>
+                <button
+                  style={{ border: 'none', backgroundColor: 'transparent' }}
+                >
+                  <div className="d-flex">
+                    <AiOutlineLike className="feed-icon" />
+                    <p className="">Like</p>
+                  </div>
+                </button>
+                <button
+                  style={{ border: 'none', backgroundColor: 'transparent' }}
+                >
+                  <div className="d-flex">
+                    <FaRegCommentDots className="feed-icon" />
+                    <p className="ml-2">Comment</p>
+                  </div>
+                </button>
+                <button
+                  style={{ border: 'none', backgroundColor: 'transparent' }}
+                >
+                  <div className="d-flex">
+                    <BsArrow90DegRight className="feed-icon" />
+                    <p className="ml-2">Comment</p>
+                  </div>
+                </button>
+                <button
+                  style={{ border: 'none', backgroundColor: 'transparent' }}
+                >
+                  <div className="d-flex">
+                    <RiSendPlaneFill className="feed-icon" />
+                    <p className="ml-2">Send</p>
+                  </div>
+                </button>
               </Row>
             </Container>
           )
