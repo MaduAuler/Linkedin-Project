@@ -1,7 +1,6 @@
 import Feed from '../components/Feed'
 import { Container, Row, Col } from 'react-bootstrap'
 import SideBar from '../components/SideBar'
-import FeedSideBar from '../components/FeedSideBar'
 
 const ProfilePage = () => {
   return (
@@ -10,10 +9,10 @@ const ProfilePage = () => {
         <Col md={2}>
           <SideBar />
         </Col>
-        <Col md={7}>
+        <Col md={6}>
           <Feed />
         </Col>
-        <Col md={3}>
+        <Col md={4}>
           <SideBar />
         </Col>
       </Row>
