@@ -4,7 +4,7 @@ import {
   InputGroup,
   DropdownButton,
 } from "react-bootstrap";
-import "./NavBar.css";
+import "../styles/NavBar.css";
 import {
   BsLinkedin,
   BsPeopleFill,
