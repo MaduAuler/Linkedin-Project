@@ -36,7 +36,8 @@ const Feed = () => {
       if (response.ok) {
         const data = await response.json()
         console.log(data)
-        setFeeds(data)
+        const dataToSet = data.reverse().slice(0, 20)
+        setFeeds(dataToSet)
       } else {
         console.log('fetch is not ok')
       }
@@ -203,8 +204,7 @@ const Feed = () => {
               </Row>
             </Container>
           )
-        })
-        .slice(0, 10)}
+        })}
     </>
   )
 }
