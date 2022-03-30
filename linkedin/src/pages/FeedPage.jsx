@@ -79,23 +79,23 @@ const FeedPage = () => {
           </div>
         </Row>
       </Container>
-
       <hr style={{ width: '50%' }} />
 
-      {Object.keys(feeds)
+      {feeds
+        .filter((feed) => feed.user)
         .map((feed) => {
           return (
-            <Container className="feed-container mb-2" key={feeds[feed]._id}>
+            <Container className="feed-container mb-2" key={feed._id}>
               <Row className="py-3 justify-content-between">
                 <div className="d-flex">
                   <Image src="https://place.dog/50/50" />
                   <div className="ml-2">
-                    <h6 className="mb-0">{feeds[feed].username}</h6>
+                    <h6 className="mb-0">{feed.username}</h6>
                     <p className="mb-0" style={{ fontSize: '0.8em' }}>
-                      {feeds[feed].title}
+                      {feed.user.title}
                     </p>
                     <p className="mb-0" style={{ fontSize: '0.8em' }}>
-                      {feeds[feed].createdAt.slice(0, -8)}
+                      {feed.createdAt.slice(0, -8)}
                     </p>
                   </div>
                 </div>
@@ -104,7 +104,7 @@ const FeedPage = () => {
                 </div>
               </Row>
               <Row>
-                <p>{feeds[feed].text}</p>
+                <p>{feed.text}</p>
               </Row>
               <hr />
               <Row className="feed-reaction justify-content-around">
