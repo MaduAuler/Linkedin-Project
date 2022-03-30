@@ -1,7 +1,6 @@
 import {
   Container,
   Dropdown,
-  Button,
   InputGroup,
   DropdownButton,
 } from "react-bootstrap";
@@ -17,6 +16,7 @@ import { HiHome } from "react-icons/hi";
 import { MdWork, MdNotifications } from "react-icons/md";
 import { RiMessage3Fill } from "react-icons/ri";
 import person from "../person.jpg";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
   return (
@@ -89,7 +89,7 @@ const NavBar = () => {
                     <h5>Jonas</h5> <p>Front-End </p>
                   </div>
                 </div>
-                <button className="button-inside-dropdown">View Profile</button>
+               <Link to="/profile/me"> <button className="button-inside-dropdown">View Profile</button></Link>
                 <Dropdown.Divider />
                 <div className="text-dropdown"> Account</div>
                 <Dropdown.Item href="#">Setting & Privacy</Dropdown.Item>

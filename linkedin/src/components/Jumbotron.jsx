@@ -4,32 +4,33 @@ import '../styles/jumbotron.css'
 import bgImage from '../assets/linkedin-background.jpg'
 import { useParams } from 'react-router-dom'
 import { FiEdit2 } from "react-icons/fi";
+import Experience from './Experience'
 
 const Jumbotron = () => {
   const {userId} = useParams()
+  console.log(userId)
   const [myData, setMyData] = useState({})
-  const [myDataUpdate, setMyDataUpdate] = useState(useState({
+  const [myDataUpdate, setMyDataUpdate] = useState({
     name: "",
     surname: "",
     email: "",
     bio: "",
     title: "",
     area: ""
-  }))
+  })
 
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-
-
-
   useEffect(() => {
     if(userId==="me") {
       fetchMyProfile("me")
+    
     } else {
       fetchMyProfile(userId)
+   
     }
   
   }, [userId])
@@ -39,7 +40,6 @@ const Jumbotron = () => {
       const response = await fetch(
         'https://striveschool-api.herokuapp.com/api/profile/'+param,
         {
-          
           headers: {
             Authorization:
               'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQxNmM4MGQzMzk4NDAwMTVjODgzYjUiLCJpYXQiOjE2NDg0NTQ3OTksImV4cCI6MTY0OTY2NDM5OX0.JWs4GSyt7R0dtISwmer1bgb6M0m4ote627Y_T1Ze67s',
@@ -48,7 +48,7 @@ const Jumbotron = () => {
       )
       if (response.ok) {
         const data = await response.json()
-        console.log(data)
+        console.log(data._id)
         setMyData(data)
       } else {
         console.log('fetch is not ok')
@@ -83,6 +83,8 @@ const Jumbotron = () => {
       console.log(error)
     }
   }
+
+
 
   return (
     <>
@@ -266,55 +268,8 @@ const Jumbotron = () => {
       </Container>
 
       <Container className="mt-4 experience-container">
-        <Row className="py-4">
-          <Col sm={12} md={6} className="name-div pl-5">
-            <h5 className="mb-0">Experience</h5>
-          </Col>
-          <Col sm={12} md={6} pr-5 className="d-flex education-div pr-5">
-            <i className="fa-solid fa-plus mr-3"></i>
-            <i className="fa-solid fa-pen"></i>
-          </Col>
-        </Row>
-        <Row className="d-flex">
-          <div className="pl-5">
-            <Image src="http://placekitten.com/50/50" className="mr-2" />
-          </div>
-          <div className="pl-1 text-left">
-            <h6 className="mb-0">Frontend developer</h6>
-            <p className="mb-0">Company name</p>
-            <p className="mb-0">Feb 2022 - present・2mos</p>
-            <p className="mb-0">Remote</p>
-          </div>
-        </Row>
-        <hr className="my-3" />
-        <Row className="d-flex">
-          <div className="pl-5">
-            <Image src="http://placekitten.com/50/50" className="mr-2" />
-          </div>
-          <div className="pl-1 text-left">
-            <h6 className="mb-0">Frontend developer</h6>
-            <p className="mb-0">Company name</p>
-            <p className="mb-0">Feb 2022 - present・2mos</p>
-            <p className="mb-0">Remote</p>
-          </div>
-        </Row>
-        <hr className="my-3" />
-        <Row className="d-flex">
-          <div className="pl-5">
-            <Image src="http://placekitten.com/50/50" className="mr-2" />
-          </div>
-          <div className="pl-1 text-left">
-            <h6 className="mb-0">Frontend developer</h6>
-            <p className="mb-0">Company name</p>
-            <p className="mb-0">Feb 2022 - present・2mos</p>
-            <p className="mb-0">Remote</p>
-          </div>
-        </Row>
-        <hr className="my-3" />
-        <div className="bottom-div  d-flex justify-content-center">
-          <h6 className="pb-2 d-inline-block">Show all experiences</h6>
-          <i className="fa-solid fa-arrow-right-long d-inline-block ml-2 mt-1"></i>
-        </div>
+    
+  { myData._id &&  <Experience  id={myData._id}/>}
       </Container>
 
       <Container className="mt-4 education-container">
