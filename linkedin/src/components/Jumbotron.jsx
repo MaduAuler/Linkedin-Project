@@ -12,33 +12,34 @@ import {
 import './jumbotron.css'
 import bgImage from '../assets/linkedin-background.jpg'
 import { useParams } from 'react-router-dom'
-import { FiEdit2 } from 'react-icons/fi'
-import ExperienceRow from './ExperienceRow'
+import { FiEdit2 } from "react-icons/fi";
+import Experience from './Experience'
 
 const Jumbotron = () => {
-  const { userId } = useParams()
+  const {userId} = useParams()
+  console.log(userId)
   const [myData, setMyData] = useState({})
-  const [myDataUpdate, setMyDataUpdate] = useState(
-    useState({
-      name: '',
-      surname: '',
-      email: '',
-      bio: '',
-      title: '',
-      area: '',
-    }),
-  )
+  const [myDataUpdate, setMyDataUpdate] = useState({
+    name: "",
+    surname: "",
+    email: "",
+    bio: "",
+    title: "",
+    area: ""
+  })
 
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false)
-  const handleShow = () => setShow(true)
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
-    if (userId === 'me') {
-      fetchMyProfile('me')
+    if(userId==="me") {
+      fetchMyProfile("me")
+    
     } else {
       fetchMyProfile(userId)
+   
     }
   }, [userId])
 
@@ -55,7 +56,7 @@ const Jumbotron = () => {
       )
       if (response.ok) {
         const data = await response.json()
-        console.log(data)
+        console.log(data._id)
         setMyData(data)
       } else {
         console.log('fetch is not ok')
@@ -90,6 +91,8 @@ const Jumbotron = () => {
       console.log(error)
     }
   }
+
+
 
   return (
     <>
@@ -291,22 +294,10 @@ const Jumbotron = () => {
       </Container>
 
       <Container className="mt-4 experience-container">
-        <Row className="py-4">
-          <Col sm={12} md={6} className="name-div pl-5">
-            <h5 className="mb-0">Experience</h5>
-          </Col>
-          <Col sm={12} md={6} pr-5 className="d-flex education-div pr-5">
-            <i className="fa-solid fa-plus mr-3"></i>
-            <i className="fa-solid fa-pen"></i>
-          </Col>
-        </Row>
 
-        <ExperienceRow />
+    
+  { myData._id &&  <Experience  id={myData._id}/>}
 
-        <div className="bottom-div  d-flex justify-content-center">
-          <h6 className="pb-2 d-inline-block">Show all experiences</h6>
-          <i className="fa-solid fa-arrow-right-long d-inline-block ml-2 mt-1"></i>
-        </div>
       </Container>
 
       <Container className="mt-4 education-container">
