@@ -1,0 +1,41 @@
+.post-container,
+.feed-container {
+  background-color: white;
+  border-radius: 8px;
+  width: 50%;
+  border: 1px solid rgb(219, 219, 219);
+}
+
+.post-container input {
+  border-radius: 45px;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(146, 146, 146);
+  color: black;
+  font-weight: 600;
+  height: 50px;
+  margin-top: 0;
+}
+.post-container input::hover {
+  background-color: rgb(194, 194, 194);
+}
+
+.icon-image {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.post-icons p,
+.feed-reaction {
+  font-weight: 600;
+  color: grey;
+}
+
+.feed-container img {
+  height: 58px;
+  width: 58px;
+}
+.feed-icon {
+  height: 1.5em;
+  width: 1.5em;
+}

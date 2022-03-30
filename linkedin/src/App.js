@@ -5,13 +5,22 @@ import MyFooter from "./components/Footer";
 import NavBar from "./components/NavBar";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProfilePage from "./pages/Profile";
+import FeedPage from './pages/FeedPage'
 
-function App() {
+function App()
+{
   return (
     <BrowserRouter>
       <NavBar />
+<<<<<<< HEAD
+
       <Routes>
         <Route path="/profile/:userId" element={<ProfilePage />} />
+        <Route path="/posts" element={<FeedPage />} />
+=======
+      <Routes>
+        <Route path="/profile/:userId" element={<ProfilePage />} />
+>>>>>>> master
       </Routes>
       <MyFooter />
     </BrowserRouter>
