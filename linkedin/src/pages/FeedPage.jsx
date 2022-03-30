@@ -1,16 +1,47 @@
 import { Container, Row, Image, Modal, Form, Button } from 'react-bootstrap'
-import { useState } from 'react'
 import { AiOutlineLike } from 'react-icons/ai'
 import { FaRegCommentDots } from 'react-icons/fa'
 import { BsArrow90DegRight } from 'react-icons/bs'
 import { RiSendPlaneFill } from 'react-icons/ri'
 import './feed.css'
+import { useState, useEffect, useRef } from 'react'
+import { useParams } from 'react-router-dom'
 
 const FeedPage = () => {
-  // const [show, setShow] = useState(false)
+  const [feeds, setFeeds] = useState([])
 
-  // const handleClose = () => setShow(false)
-  // const handleShow = () => setShow(true)
+  const { postId } = useParams()
+
+  const [show, setShow] = useState(false)
+  const handleClose = () => setShow(false)
+  const handleShow = () => setShow(true)
+
+  useEffect(() => {
+    fetchFeeds()
+  }, [])
+
+  const fetchFeeds = async () => {
+    try {
+      const response = await fetch(
+        'https://striveschool-api.herokuapp.com/api/posts/',
+        {
+          headers: {
+            Authorization:
+              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQxNmM4MGQzMzk4NDAwMTVjODgzYjUiLCJpYXQiOjE2NDg0NTQ3OTksImV4cCI6MTY0OTY2NDM5OX0.JWs4GSyt7R0dtISwmer1bgb6M0m4ote627Y_T1Ze67s',
+          },
+        },
+      )
+      if (response.ok) {
+        const data = await response.json()
+        console.log(data)
+        setFeeds(data)
+      } else {
+        console.log('fetch is not ok')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <>
@@ -51,54 +82,53 @@ const FeedPage = () => {
 
       <hr style={{ width: '50%' }} />
 
-      <Container className="feed-container">
-        <Row className="py-3 justify-content-between">
-          <div className="d-flex">
-            <Image src="https://place.dog/50/50" />
-            <div className="ml-2">
-              <h6 className="mb-0">Name</h6>
-              <p className="mb-0" style={{ fontSize: '0.8em' }}>
-                Title
-              </p>
-              <p className="mb-0" style={{ fontSize: '0.8em' }}>
-                When
-              </p>
-            </div>
-          </div>
-          <div>
-            <i class="fa-solid fa-ellipsis"></i>
-          </div>
-        </Row>
-        <Row>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deleniti
-            commodi omnis magnam facere, consequatur ipsam sed velit,
-            dignissimos atque veritatis illo dicta quibusdam adipisci, iusto
-            reiciendis suscipit accusamus corrupti deserunt!
-          </p>
-        </Row>
-        <hr />
-        <Row className="feed-reaction justify-content-around">
-          <button>
-            <div className="d-flex">
-              <AiOutlineLike className="feed-icon" />
-              <p className="">Like</p>
-            </div>
-          </button>
-          <div className="d-flex">
-            <FaRegCommentDots className="feed-icon" />
-            <p className="ml-2">Comment</p>
-          </div>
-          <div className="d-flex">
-            <BsArrow90DegRight className="feed-icon" />
-            <p className="ml-2">Comment</p>
-          </div>
-          <div className="d-flex">
-            <RiSendPlaneFill className="feed-icon" />
-            <p className="ml-2">Send</p>
-          </div>
-        </Row>
-      </Container>
+      {Object.keys(feeds)
+        .map((feed) => {
+          return (
+            <Container className="feed-container mb-2" key={feeds[feed]._id}>
+              <Row className="py-3 justify-content-between">
+                <div className="d-flex">
+                  <Image src="https://place.dog/50/50" />
+                  <div className="ml-2">
+                    <h6 className="mb-0">{feeds[feed].username}</h6>
+                    <p className="mb-0" style={{ fontSize: '0.8em' }}>
+                      {feeds[feed].title}
+                    </p>
+                    <p className="mb-0" style={{ fontSize: '0.8em' }}>
+                      {feeds[feed].createdAt.slice(0, -8)}
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <i class="fa-solid fa-ellipsis"></i>
+                </div>
+              </Row>
+              <Row>
+                <p>{feeds[feed].text}</p>
+              </Row>
+              <hr />
+              <Row className="feed-reaction justify-content-around">
+                <div className="d-flex">
+                  <AiOutlineLike className="feed-icon" />
+                  <p className="">Like</p>
+                </div>
+                <div className="d-flex">
+                  <FaRegCommentDots className="feed-icon" />
+                  <p className="ml-2">Comment</p>
+                </div>
+                <div className="d-flex">
+                  <BsArrow90DegRight className="feed-icon" />
+                  <p className="ml-2">Comment</p>
+                </div>
+                <div className="d-flex">
+                  <RiSendPlaneFill className="feed-icon" />
+                  <p className="ml-2">Send</p>
+                </div>
+              </Row>
+            </Container>
+          )
+        })
+        .slice(0, 10)}
     </>
   )
 }
