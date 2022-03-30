@@ -19,6 +19,7 @@ const Jumbotron = () => {
   const {userId} = useParams()
   console.log(userId)
   const [myData, setMyData] = useState({})
+  const [hide, setHide] = useState(false)
   const [myDataUpdate, setMyDataUpdate] = useState({
     name: "",
     surname: "",
@@ -36,10 +37,11 @@ const Jumbotron = () => {
   useEffect(() => {
     if(userId==="me") {
       fetchMyProfile("me")
+      setHide(true)
     
     } else {
       fetchMyProfile(userId)
-   
+      setHide(false)
     }
   }, [userId])
 
@@ -102,8 +104,10 @@ const Jumbotron = () => {
         </div>
         <Row className="edit-div px-4">
           <Image src={myData.image} roundedCircle />
+          
           <button onClick={handleShow} className="button-container">
-            <FiEdit2 className="button-edit mt-2" />
+           {hide ? <FiEdit2 className='button-edit mt-4'/> : <div className='mt-5'></div>} 
+
           </button>
 
           <Modal show={show} onHide={handleClose}>
