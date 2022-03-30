@@ -1,10 +1,10 @@
-import { Container, Row, Image, Modal, Form, Button } from 'react-bootstrap'
-import { useState } from 'react'
-import { AiOutlineLike } from 'react-icons/ai'
-import { FaRegCommentDots } from 'react-icons/fa'
-import { BsArrow90DegRight } from 'react-icons/bs'
-import { RiSendPlaneFill } from 'react-icons/ri'
-import './feed.css'
+import { Container, Row, Image, Modal, Form, Button } from "react-bootstrap";
+import { useState } from "react";
+import { AiOutlineLike } from "react-icons/ai";
+import { FaRegCommentDots } from "react-icons/fa";
+import { BsArrow90DegRight } from "react-icons/bs";
+import { RiSendPlaneFill } from "react-icons/ri";
+import "./feed.css";
 
 const FeedPage = () => {
   // const [show, setShow] = useState(false)
@@ -25,31 +25,31 @@ const FeedPage = () => {
         </Row>
         <Row className="post-icons justify-content-center">
           <div className="d-flex align-items-baseline">
-            <i class="fa-solid fa-image" style={{ color: '#70B5F8' }}></i>
+            <i class="fa-solid fa-image" style={{ color: "#70B5F8" }}></i>
             <p className="ml-3 mr-5">Photo</p>
           </div>
           <div className="d-flex align-items-baseline">
-            <i class="fa-brands fa-youtube" style={{ color: '#7FC15E' }}></i>
+            <i class="fa-brands fa-youtube" style={{ color: "#7FC15E" }}></i>
             <p className="ml-3 mr-5">Video</p>
           </div>
           <div className="d-flex align-items-baseline">
             <i
               class="fa-solid fa-calendar-week"
-              style={{ color: '#E7A43E' }}
+              style={{ color: "#E7A43E" }}
             ></i>
             <p className="ml-3 mr-5">Event</p>
           </div>
           <div className="d-flex align-items-baseline">
             <i
               class="fa-solid fa-pen-to-square"
-              style={{ color: '#FC9294' }}
+              style={{ color: "#FC9294" }}
             ></i>
             <p className="ml-3">Write article</p>
           </div>
         </Row>
       </Container>
 
-      <hr style={{ width: '50%' }} />
+      <hr style={{ width: "50%" }} />
 
       <Container className="feed-container">
         <Row className="py-3 justify-content-between">
@@ -57,10 +57,10 @@ const FeedPage = () => {
             <Image src="https://place.dog/50/50" />
             <div className="ml-2">
               <h6 className="mb-0">Name</h6>
-              <p className="mb-0" style={{ fontSize: '0.8em' }}>
+              <p className="mb-0" style={{ fontSize: "0.8em" }}>
                 Title
               </p>
-              <p className="mb-0" style={{ fontSize: '0.8em' }}>
+              <p className="mb-0" style={{ fontSize: "0.8em" }}>
                 When
               </p>
             </div>
@@ -79,28 +79,34 @@ const FeedPage = () => {
         </Row>
         <hr />
         <Row className="feed-reaction justify-content-around">
-          <button>
+          <button style={{ border: "none", backgroundColor: "transparent" }}>
             <div className="d-flex">
               <AiOutlineLike className="feed-icon" />
               <p className="">Like</p>
             </div>
           </button>
-          <div className="d-flex">
-            <FaRegCommentDots className="feed-icon" />
-            <p className="ml-2">Comment</p>
-          </div>
-          <div className="d-flex">
-            <BsArrow90DegRight className="feed-icon" />
-            <p className="ml-2">Comment</p>
-          </div>
-          <div className="d-flex">
-            <RiSendPlaneFill className="feed-icon" />
-            <p className="ml-2">Send</p>
-          </div>
+          <button style={{ border: "none", backgroundColor: "transparent" }}>
+            <div className="d-flex">
+              <FaRegCommentDots className="feed-icon" />
+              <p className="ml-2">Comment</p>
+            </div>
+          </button>
+          <button style={{ border: "none", backgroundColor: "transparent" }}>
+            <div className="d-flex">
+              <BsArrow90DegRight className="feed-icon" />
+              <p className="ml-2">Comment</p>
+            </div>
+          </button>
+          <button style={{ border: "none", backgroundColor: "transparent" }}>
+            <div className="d-flex">
+              <RiSendPlaneFill className="feed-icon" />
+              <p className="ml-2">Send</p>
+            </div>
+          </button>
         </Row>
       </Container>
     </>
-  )
-}
+  );
+};
 
-export default FeedPage
+export default FeedPage;
