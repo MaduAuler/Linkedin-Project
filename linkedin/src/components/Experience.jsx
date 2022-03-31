@@ -40,18 +40,18 @@ const Experience = (props) => {
     }
   }
   useEffect(() => {
-    getExperience(props.id)
+    getExperience()
     if (props.id === '62416c80d339840015c883b5') {
       setMyId('62416c80d339840015c883b5')
     } else {
       setMyId('')
     }
-  }, [props.id])
+  }, [])
 
-  const getExperience = async (id) => {
+  const getExperience = async () => {
     try {
       const response = await fetch(
-        `https://striveschool-api.herokuapp.com/api/profile/${id}/experiences`,
+        `https://striveschool-api.herokuapp.com/api/profile/${props.id}/experiences`,
         {
           headers: {
             Authorization:
@@ -271,6 +271,7 @@ const Experience = (props) => {
                 <p className="mb-0">
                   {experience.startDate} {experience.endDate}
                 </p>
+                <p className="mb-0">{experience.description}</p>
                 <p className="mb-0">{experience.area}</p>
                 {myId && (
                   <Button

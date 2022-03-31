@@ -1,6 +1,6 @@
 import "../styles/FeedSideBar.css";
 import { Container, Row } from "react-bootstrap";
-import person from "../person.jpg";
+import bgImage from '../assets/linkedin-background.jpg'
 import { useEffect, useState } from "react";
 
 
@@ -38,11 +38,11 @@ const FeedSideBar = () => {
     <Container className="sidebar">
       <Row className="sidebar-top">
         <img
-          src={"https://images.unsplash.com/photo-1648568713671-0c0a3eb47eea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"}
+          src={bgImage}
           alt=""
         />
 
-        <img className="sidebar-avatar" src={myData.image} alt="avatar_img" />
+        <div ><img className="sidebar-avatar" src={myData.image} alt="avatar_img" /></div>
         <h2>{myData.name} {myData.surname}</h2>
         <h4>{myData.email}</h4>
       </Row>
