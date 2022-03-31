@@ -66,16 +66,12 @@ const SideBar = () => {
           .map((profile) => {
             return (
               <Row className="d-flex mb-2">
-                <div className="ml-3 mb-5">
+                <div className="ml-1 mb-5">
                   <Link to={"/profile/" + profiles[profile]._id}>
-                    <Image
-                      src={profiles[profile].image}
-                      className="mr-2"
-                      style={{ height: "50px" }}
-                    />
+                    <Image src={profiles[profile].image} className="mr-2" />
                   </Link>
                 </div>
-                <div className="pl-1 text-left">
+                <div className="text-left">
                   <h6 className="mb-0">
                     {profiles[profile].name}, {profiles[profile].surname}
                   </h6>
