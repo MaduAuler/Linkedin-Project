@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import {
   Container,
   Row,
@@ -14,6 +14,7 @@ import bgImage from '../assets/linkedin-background.jpg'
 import { useParams } from 'react-router-dom'
 import { FiEdit2 } from "react-icons/fi";
 import Experience from './Experience'
+import axios from 'axios'
 
 const Jumbotron = () => {
   const {userId} = useParams()
@@ -28,11 +29,17 @@ const Jumbotron = () => {
     title: "",
     area: ""
   })
+  const [file, setFile] = useState(null)
+  
 
   const [show, setShow] = useState(false);
+  const[show2, setShow2] = useState(false)
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const handleClose2 = () => setShow2(false);
+  const handleShow2 = () => setShow2(true);
 
   useEffect(() => {
     if(userId==="me") {
@@ -94,14 +101,60 @@ const Jumbotron = () => {
     }
   }
 
+  const handleFile = (e)=> {
+    let file = e.target.files[0]
+    setFile(file)
+  }
 
+
+  const handleUpload = ()=> {
+    let formdata = new FormData()
+
+  formdata.append('picture', file)
+
+   axios({
+    url:'https://striveschool-api.herokuapp.com/api/profile/62416c80d339840015c883b5/picture',
+    method:"POST",
+    headers: {
+      Authorization:
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQxNmM4MGQzMzk4NDAwMTVjODgzYjUiLCJpYXQiOjE2NDg0NTQ3OTksImV4cCI6MTY0OTY2NDM5OX0.JWs4GSyt7R0dtISwmer1bgb6M0m4ote627Y_T1Ze67s',
+    },
+    data: formdata
+  }).then((res)=>{
+  }, (err) =>{
+    console.log(err)
+  })
+
+  handleClose()
+  }
 
   return (
     <>
       <Container className="mt-4 jumbotron-container">
         <div className="bg-div" style={{ backgroundImage: `url(${bgImage})` }}>
-          <i className="fa-solid fa-camera"></i>
+          <Button onClick={handleShow2}><i className="fa-solid fa-camera" ></i></Button>
         </div>
+
+        <Modal show={show2} onHide={handleClose2}>
+        <Modal.Header closeButton>
+          <Modal.Title>Upload Picture</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form>
+            <input type="file" onChange={(e)=> 
+            handleFile(e)}/>
+          <Button variant="secondary" onClick={handleClose2}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={()=> 
+            handleUpload()}>
+            Upload
+          </Button>
+          </form>
+        </Modal.Body>
+    
+      </Modal>
+
         <Row className="edit-div px-4">
           <Image src={myData.image} roundedCircle />
           
