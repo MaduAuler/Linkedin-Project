@@ -17,8 +17,39 @@ import { MdWork, MdNotifications } from 'react-icons/md'
 import { RiMessage3Fill } from 'react-icons/ri'
 import person from '../person.jpg'
 import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 
 const NavBar = () => {
+  const [myData, setMyData]= useState({})
+
+  useEffect(() => {
+  fetchMyProfile()
+  }, [myData])
+
+  const fetchMyProfile = async () => {
+    try {
+      const response = await fetch(
+        'https://striveschool-api.herokuapp.com/api/profile/me',
+        {
+          headers: {
+            Authorization:
+              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQxNmM4MGQzMzk4NDAwMTVjODgzYjUiLCJpYXQiOjE2NDg0NTQ3OTksImV4cCI6MTY0OTY2NDM5OX0.JWs4GSyt7R0dtISwmer1bgb6M0m4ote627Y_T1Ze67s',
+          },
+        },
+      )
+      if (response.ok) {
+        const data = await response.json()
+        console.log(data._id)
+        setMyData(data)
+      } else {
+        console.log('fetch is not ok')
+      }
+    } catch (error) {
+     
+    }
+  }
+
+
   return (
     <div className="flex-container d-flex align-items-center ">
       <Container className="d-flex align-items-center ">
@@ -66,7 +97,7 @@ const NavBar = () => {
             title={
               <div className="d-flex flex-column h-100 ">
                 <img
-                  src={person}
+                  src={myData.image}
                   className="round"
                   style={{ height: '25px', width: '25px' }}
                 />
@@ -83,7 +114,7 @@ const NavBar = () => {
             <div className="d-flex align-items-center justify-content-center h-100">
               <div>
                 <img
-                  src={person}
+                  src={myData.image}
                   className="round mr-2"
                   style={{ height: '50px', width: '50px' }}
                 ></img>

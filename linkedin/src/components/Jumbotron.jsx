@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect} from 'react'
 import {
   Container,
   Row,
@@ -17,6 +17,7 @@ import Experience from './Experience'
 import axios from 'axios'
 
 const Jumbotron = () => {
+
   const {userId} = useParams()
   console.log(userId)
   const [myData, setMyData] = useState({})
@@ -30,8 +31,6 @@ const Jumbotron = () => {
     area: ""
   })
   const [file, setFile] = useState(null)
-  
-
   const [show, setShow] = useState(false);
   const[show2, setShow2] = useState(false)
 
@@ -110,7 +109,7 @@ const Jumbotron = () => {
   const handleUpload = ()=> {
     let formdata = new FormData()
 
-  formdata.append('picture', file)
+    formdata.append('profile', file)
 
    axios({
     url:'https://striveschool-api.herokuapp.com/api/profile/62416c80d339840015c883b5/picture',
@@ -125,14 +124,15 @@ const Jumbotron = () => {
     console.log(err)
   })
 
-  handleClose()
+  handleClose2()
+
   }
 
   return (
     <>
       <Container className="mt-4 jumbotron-container">
         <div className="bg-div" style={{ backgroundImage: `url(${bgImage})` }}>
-          <Button onClick={handleShow2}><i className="fa-solid fa-camera" ></i></Button>
+          <i className="fa-solid fa-camera" ></i>
         </div>
 
         <Modal show={show2} onHide={handleClose2}>
@@ -156,7 +156,7 @@ const Jumbotron = () => {
       </Modal>
 
         <Row className="edit-div px-4">
-          <Image src={myData.image} roundedCircle />
+       {hide ? <Button onClick={handleShow2}><Image src={myData.image} roundedCircle /></Button> : <Image src={myData.image} roundedCircle />} 
           
           <button onClick={handleShow} className="button-container">
            {hide ? <FiEdit2 className='button-edit mt-4'/> : <div className='mt-5'></div>} 
