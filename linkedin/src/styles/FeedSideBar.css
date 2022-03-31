@@ -1,6 +1,5 @@
 .sidebar {
-  position: sticky;
-  top: 80px;
+  margin-top: 25px;
   border-radius: 10px;
   text-align: center;
   height: fit-content;
