@@ -44,7 +44,7 @@ const [myData, setMyData] = useState({})
 
     fetchMyProfile()
 
-  }, [feedId])
+  }, [])
 
   const showFeeds = async () => {
     try {
@@ -143,9 +143,9 @@ const [myData, setMyData] = useState({})
   }
 
 
-  //const uploadImage = async (e) => {
-  //  e.preventDefault()
-  //  console.log(e.target.value)
+  const uploadImage = async (e) => {
+    e.preventDefault()
+   console.log(e.target.value)}
     // let fd = new FormData()
     // fd.append()
     // let response = await fetch(

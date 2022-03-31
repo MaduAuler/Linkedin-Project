@@ -24,7 +24,7 @@ const NavBar = () => {
 
   useEffect(() => {
   fetchMyProfile()
-  }, [myData])
+  }, [])
 
   const fetchMyProfile = async () => {
     try {
@@ -121,7 +121,7 @@ const NavBar = () => {
               </div>
               <div>
                 {' '}
-                <h5>Jonas</h5> <p>Front-End </p>
+                <h5>{myData.name}</h5> <p>{myData.title}</p>
               </div>
             </div>
             <Link to="/profile/me">
