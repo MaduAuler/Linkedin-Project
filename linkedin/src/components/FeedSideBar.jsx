@@ -43,8 +43,8 @@ const FeedSideBar = () => {
         />
 
         <img className="sidebar-avatar" src={myData.image} alt="avatar_img" />
-        <h2>Michael Redruello</h2>
-        <h4>redruellomichael@gmail.com</h4>
+        <h2>{myData.name} {myData.surname}</h2>
+        <h4>{myData.email}</h4>
       </Row>
       <div className="sidebar-stats">
         <div className="sidebar-stat">
