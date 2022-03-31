@@ -15,10 +15,19 @@ const Feed = () => {
 
   // for PUT
   const [feedId, setFeedId] = useState('')
+
+
+  // for POST
+
 const [myData, setMyData] = useState({})
+
   const [show, setShow] = useState(false)
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
+  // for Uploading
+  const [show2, setShow2] = useState(false)
+  const handleClose2 = () => setShow2(false)
+  const handleShow2 = () => setShow2(true)
 
   const openEditModal = (id) => {
     handleShow()
@@ -28,7 +37,13 @@ const [myData, setMyData] = useState({})
 
   useEffect(() => {
     showFeeds()
+
+    // if (feedId) {
+    //   fetchFeedId()
+    // }
+
     fetchMyProfile()
+
   }, [feedId])
 
   const showFeeds = async () => {
@@ -54,6 +69,26 @@ const [myData, setMyData] = useState({})
       console.log(error)
     }
   }
+  // wanted to prefill the data for PUT
+  // const fetchFeedId = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       'https://striveschool-api.herokuapp.com/api/posts/',
+  //     )
+  //     if (response.ok) {
+  //       let data = await response.json()
+  //       setPostFeed({ text: data.text })
+  //       console.log(data)
+  //     } else {
+  //       console.log('something is wrong with fetch')
+  //     }
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
+  // window.onload = () => {
+  //   fetchFeedId()
+  // }
 
   const submitFeed = async () => {
     try {
@@ -108,6 +143,22 @@ const [myData, setMyData] = useState({})
   }
 
 
+  //const uploadImage = async (e) => {
+  //  e.preventDefault()
+  //  console.log(e.target.value)
+    // let fd = new FormData()
+    // fd.append()
+    // let response = await fetch(
+    //   'https://striveschool-api.herokuapp.com/api/posts/' + feedId,
+    //   {
+    //     method: 'POST',
+    //     body: new FormData(formElem),
+    //   },
+    // )
+
+    // let result = await response.json()
+
+
   const fetchMyProfile = async (param) => {
     try {
       const response = await fetch(
@@ -129,6 +180,7 @@ const [myData, setMyData] = useState({})
     } catch (error) {
       console.log(error)
     }
+
   }
 
   return (
@@ -141,6 +193,7 @@ const [myData, setMyData] = useState({})
               <Form.Control type="text" placeholder="Start a post" />
             </Form.Group>
           </Form>
+
           {/* Modal to post */}
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
@@ -208,12 +261,23 @@ const [myData, setMyData] = useState({})
         </Row>
 
         <Row className="post-icons justify-content-around">
-          <button>
+          <button onClick={handleShow2}>
             <div className="d-flex align-items-baseline">
               <i class="fa-solid fa-image" style={{ color: '#70B5F8' }}></i>
               <p className="ml-3">Photo</p>
             </div>
           </button>
+
+          {/* Modal to upload image */}
+          <Modal show={show2} onHide={handleClose2}>
+            <Modal.Header closeButton>
+              <Modal.Title>Upload a image</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <input type="file" onChange={uploadImage} />
+            </Modal.Body>
+          </Modal>
+
           <button>
             <div className="d-flex align-items-baseline">
               <i class="fa-brands fa-youtube" style={{ color: '#7FC15E' }}></i>
