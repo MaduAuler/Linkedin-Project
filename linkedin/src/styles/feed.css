@@ -34,7 +34,9 @@
   font-weight: 600;
   color: grey;
 }
-.post-icons button {
+.post-icons button,
+.feed-edit-button,
+.feed-reaction button {
   border: none;
   background-color: transparent;
 }

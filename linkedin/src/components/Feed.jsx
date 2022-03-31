@@ -5,24 +5,32 @@ import { BsArrow90DegRight } from 'react-icons/bs'
 import { RiSendPlaneFill } from 'react-icons/ri'
 import '../styles/feed.css'
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
 
 const Feed = () => {
+  // for GET
   const [feeds, setFeeds] = useState([])
 
-  const { postId } = useParams()
-
+  // for POST
   const [postFeed, setPostFeed] = useState({ text: '' })
+
+  // for PUT
+  const [feedId, setFeedId] = useState('')
 
   const [show, setShow] = useState(false)
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
-  useEffect(() => {
-    fetchFeeds()
-  }, [postFeed])
+  const openEditModal = (id) => {
+    handleShow()
+    setFeedId(id)
+    console.log(id)
+  }
 
-  const fetchFeeds = async () => {
+  useEffect(() => {
+    showFeeds()
+  }, [feedId])
+
+  const showFeeds = async () => {
     try {
       const response = await fetch(
         'https://striveschool-api.herokuapp.com/api/posts/',
@@ -36,22 +44,24 @@ const Feed = () => {
       if (response.ok) {
         const data = await response.json()
         console.log(data)
-        const dataToSet = data.reverse().slice(0, 20)
-        setFeeds(dataToSet)
+        const setToData = data.reverse().slice(0, 10)
+        setFeeds(setToData)
       } else {
-        console.log('fetch is not ok')
+        console.log('something is wrong with fetch')
       }
     } catch (error) {
       console.log(error)
     }
   }
 
-  const postNewFeed = async () => {
+  const submitFeed = async () => {
     try {
       const response = await fetch(
-        'https://striveschool-api.herokuapp.com/api/posts/',
+        feedId
+          ? 'https://striveschool-api.herokuapp.com/api/posts/' + feedId
+          : 'https://striveschool-api.herokuapp.com/api/posts/',
         {
-          method: 'POST',
+          method: feedId ? 'PUT' : 'POST',
           body: JSON.stringify(postFeed),
           headers: {
             Authorization:
@@ -61,9 +71,35 @@ const Feed = () => {
         },
       )
       if (response.ok) {
-        fetchFeeds()
+        showFeeds()
+        handleClose()
       } else {
-        console.log('fetch is not ok')
+        console.log('something is wrong with fetch')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const deleteFeed = async () => {
+    try {
+      const response = await fetch(
+        'https://striveschool-api.herokuapp.com/api/posts/' + feedId,
+
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization:
+              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQxNmM4MGQzMzk4NDAwMTVjODgzYjUiLCJpYXQiOjE2NDg0NTQ3OTksImV4cCI6MTY0OTY2NDM5OX0.JWs4GSyt7R0dtISwmer1bgb6M0m4ote627Y_T1Ze67s',
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+      if (response.ok) {
+        showFeeds()
+        handleClose()
+      } else {
+        console.log('something is wrong with fetch')
       }
     } catch (error) {
       console.log(error)
@@ -80,10 +116,10 @@ const Feed = () => {
               <Form.Control type="text" placeholder="Start a post" />
             </Form.Group>
           </Form>
-
+          {/* Modal to post */}
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Edit Intro</Modal.Title>
+              <Modal.Title>Create a post</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <div>
@@ -101,11 +137,51 @@ const Feed = () => {
                     />
                   </Form.Group>
                 </Form>
-                <button onClick={postNewFeed}>Post</button>
+                <div className="d-flex justify-content-center">
+                  {feedId ? (
+                    <>
+                      <Button
+                        variant="success"
+                        onClick={() => submitFeed(feedId)}
+                        className="ml-3"
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        variant="danger"
+                        onClick={deleteFeed}
+                        className="ml-3"
+                      >
+                        Delete
+                      </Button>
+                      <Button
+                        variant="secondary"
+                        onClick={handleClose}
+                        className="ml-3"
+                      >
+                        Close
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button variant="primary" onClick={submitFeed}>
+                        Post
+                      </Button>
+                      <Button
+                        variant="secondary"
+                        onClick={handleClose}
+                        className="ml-3"
+                      >
+                        Close
+                      </Button>
+                    </>
+                  )}
+                </div>
               </div>
             </Modal.Body>
           </Modal>
         </Row>
+
         <Row className="post-icons justify-content-around">
           <button>
             <div className="d-flex align-items-baseline">
@@ -141,70 +217,65 @@ const Feed = () => {
       </Container>
       <hr />
 
-      {/* {feeds
-        .filter((feed) => feed.user) */}
-      {feeds
-        .map((feed) => {
-          return (
-            <Container className="feed-container mb-2" key={feed._id}>
-              <Row className="py-3 justify-content-aroundn">
-                <div className="d-flex">
-                  {/* <Image src={feed.user.user.image} /> */}
-                  <div className="ml-2">
-                    <h6 className="mb-0">{feed.username}</h6>
-                    {/* <p className="mb-0" style={{ fontSize: '0.8em' }}>
+      {feeds.map((feed) => {
+        return (
+          <Container className="feed-container mb-2" key={feed._id}>
+            <Row className="py-3 justify-content-between">
+              <div className="d-flex">
+                {/* <Image src={feed.user.user.image} /> */}
+                <div>
+                  <h6>{feed.username}</h6>
+                  {/* <p className="mb-0" style={{ fontSize: '0.8em' }}>
                       {feed.user.title}
                     </p> */}
-                    <p className="mb-0" style={{ fontSize: '0.8em' }}>
-                      {feed.createdAt.slice(0, -8)}
-                    </p>
-                  </div>
+                  <p className="mb-0" style={{ fontSize: '0.8em' }}>
+                    {feed.createdAt.slice(0, -8)}
+                  </p>
                 </div>
-                <div>
-                  <i class="fa-solid fa-ellipsis"></i>
+              </div>
+              <button
+                className="feed-edit-button"
+                onClick={() => {
+                  openEditModal(feed._id)
+                }}
+              >
+                <i class="fa-solid fa-ellipsis"></i>
+              </button>
+            </Row>
+            <Row>
+              <p>{feed.text}</p>
+            </Row>
+            <hr />
+
+            <Row className="feed-reaction justify-content-around">
+              <button>
+                <div className="d-flex">
+                  <AiOutlineLike className="feed-icon" />
+                  <p className="">Like</p>
                 </div>
-              </Row>
-              <Row>
-                <p>{feed.text}</p>
-              </Row>
-              <hr />
-              <Row className="feed-reaction justify-content-around">
-                <button
-                  style={{ border: 'none', backgroundColor: 'transparent' }}
-                >
-                  <div className="d-flex">
-                    <AiOutlineLike className="feed-icon" />
-                    <p className="">Like</p>
-                  </div>
-                </button>
-                <button
-                  style={{ border: 'none', backgroundColor: 'transparent' }}
-                >
-                  <div className="d-flex">
-                    <FaRegCommentDots className="feed-icon" />
-                    <p className="ml-2">Comment</p>
-                  </div>
-                </button>
-                <button
-                  style={{ border: 'none', backgroundColor: 'transparent' }}
-                >
-                  <div className="d-flex">
-                    <BsArrow90DegRight className="feed-icon" />
-                    <p className="ml-2">Comment</p>
-                  </div>
-                </button>
-                <button
-                  style={{ border: 'none', backgroundColor: 'transparent' }}
-                >
-                  <div className="d-flex">
-                    <RiSendPlaneFill className="feed-icon" />
-                    <p className="ml-2">Send</p>
-                  </div>
-                </button>
-              </Row>
-            </Container>
-          )
-        })}
+              </button>
+              <button>
+                <div className="d-flex">
+                  <FaRegCommentDots className="feed-icon" />
+                  <p className="ml-2">Comment</p>
+                </div>
+              </button>
+              <button>
+                <div className="d-flex">
+                  <BsArrow90DegRight className="feed-icon" />
+                  <p className="ml-2">Share</p>
+                </div>
+              </button>
+              <button>
+                <div className="d-flex">
+                  <RiSendPlaneFill className="feed-icon" />
+                  <p className="ml-2">Send</p>
+                </div>
+              </button>
+            </Row>
+          </Container>
+        )
+      })}
     </>
   )
 }
