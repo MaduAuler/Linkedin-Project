@@ -22,7 +22,7 @@ const Feed = () => {
 
   const openEditModal = (id) => {
     handleShow()
-    setPostFeed(id)
+    setFeedId(id)
     console.log(id)
   }
 
@@ -81,6 +81,31 @@ const Feed = () => {
     }
   }
 
+  const deleteFeed = async () => {
+    try {
+      const response = await fetch(
+        'https://striveschool-api.herokuapp.com/api/posts/' + feedId,
+
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization:
+              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQxNmM4MGQzMzk4NDAwMTVjODgzYjUiLCJpYXQiOjE2NDg0NTQ3OTksImV4cCI6MTY0OTY2NDM5OX0.JWs4GSyt7R0dtISwmer1bgb6M0m4ote627Y_T1Ze67s',
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+      if (response.ok) {
+        showFeeds()
+        handleClose()
+      } else {
+        console.log('something is wrong with fetch')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <>
       <Container className="post-container mt-4">
@@ -113,16 +138,44 @@ const Feed = () => {
                   </Form.Group>
                 </Form>
                 <div className="d-flex justify-content-center">
-                  <Button variant="primary" onClick={submitFeed}>
-                    Post
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    onClick={handleClose}
-                    className="ml-3"
-                  >
-                    Close
-                  </Button>
+                  {feedId ? (
+                    <>
+                      <Button
+                        variant="success"
+                        onClick={() => submitFeed(feedId)}
+                        className="ml-3"
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        variant="danger"
+                        onClick={deleteFeed}
+                        className="ml-3"
+                      >
+                        Delete
+                      </Button>
+                      <Button
+                        variant="secondary"
+                        onClick={handleClose}
+                        className="ml-3"
+                      >
+                        Close
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button variant="primary" onClick={submitFeed}>
+                        Post
+                      </Button>
+                      <Button
+                        variant="secondary"
+                        onClick={handleClose}
+                        className="ml-3"
+                      >
+                        Close
+                      </Button>
+                    </>
+                  )}
                 </div>
               </div>
             </Modal.Body>
@@ -193,44 +246,6 @@ const Feed = () => {
               <p>{feed.text}</p>
             </Row>
             <hr />
-
-            {/* Modal to edit */}
-            {/* <Modal show={show} onHide={handleClose}>
-              <Modal.Header closeButton>
-                <Modal.Title>Edit a post</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <div>
-                  <Form className="ml-2">
-                    <Form.Group>
-                      <Form.Control
-                        type="text"
-                        placeholder="Start a post"
-                        value={postFeed.text}
-                        onChange={(e) =>
-                          setPostFeed({
-                            text: e.target.value,
-                          })
-                        }
-                      />
-                    </Form.Group>
-                  </Form>
-                  <div className="d-flex justify-content-center">
-                    <Button variant="primary" onClick={submitFeed}>
-                      Edit
-                    </Button>
-            
-                    <Button
-                      variant="secondary"
-                      onClick={handleClose}
-                      className="ml-3"
-                    >
-                      Close
-                    </Button>
-                  </div>
-                </div>
-              </Modal.Body>
-            </Modal> */}
 
             <Row className="feed-reaction justify-content-around">
               <button>
