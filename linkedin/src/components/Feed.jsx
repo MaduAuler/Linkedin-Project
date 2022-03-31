@@ -16,7 +16,11 @@ const Feed = () => {
   // for PUT
   const [feedId, setFeedId] = useState('')
 
+
   // for POST
+
+const [myData, setMyData] = useState({})
+
   const [show, setShow] = useState(false)
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
@@ -33,9 +37,13 @@ const Feed = () => {
 
   useEffect(() => {
     showFeeds()
+
     // if (feedId) {
     //   fetchFeedId()
     // }
+
+    fetchMyProfile()
+
   }, [feedId])
 
   const showFeeds = async () => {
@@ -134,9 +142,10 @@ const Feed = () => {
     }
   }
 
-  const uploadImage = async (e) => {
-    e.preventDefault()
-    console.log(e.target.value)
+
+  //const uploadImage = async (e) => {
+  //  e.preventDefault()
+  //  console.log(e.target.value)
     // let fd = new FormData()
     // fd.append()
     // let response = await fetch(
@@ -148,13 +157,37 @@ const Feed = () => {
     // )
 
     // let result = await response.json()
+
+
+  const fetchMyProfile = async (param) => {
+    try {
+      const response = await fetch(
+        'https://striveschool-api.herokuapp.com/api/profile/me',
+        {
+          headers: {
+            Authorization:
+              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQxNmM4MGQzMzk4NDAwMTVjODgzYjUiLCJpYXQiOjE2NDg0NTQ3OTksImV4cCI6MTY0OTY2NDM5OX0.JWs4GSyt7R0dtISwmer1bgb6M0m4ote627Y_T1Ze67s',
+          },
+        },
+      )
+      if (response.ok) {
+        const data = await response.json()
+        console.log(data._id)
+        setMyData(data)
+      } else {
+        console.log('fetch is not ok')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+
   }
 
   return (
     <>
       <Container className="post-container mt-4">
         <Row className="pt-3">
-          <Image src="https://place.dog/50/50" className="icon-image" />
+          <Image src={myData.image} className="icon-image" />
           <Form className="ml-2" onClick={handleShow}>
             <Form.Group>
               <Form.Control type="text" placeholder="Start a post" />

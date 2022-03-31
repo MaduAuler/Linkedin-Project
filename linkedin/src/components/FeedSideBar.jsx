@@ -1,16 +1,48 @@
 import "../styles/FeedSideBar.css";
 import { Container, Row } from "react-bootstrap";
 import person from "../person.jpg";
+import { useEffect, useState } from "react";
+
 
 const FeedSideBar = () => {
+  const [myData, setMyData]= useState({})
+  
+
+  useEffect(() => {
+  fetchProfiles()
+  }, [])
+  
+  const fetchProfiles = async () => {
+    try {
+      let response = await fetch(
+        "https://striveschool-api.herokuapp.com/api/profile/me",
+        {
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQxNmM4MGQzMzk4NDAwMTVjODgzYjUiLCJpYXQiOjE2NDg0NTQ3OTksImV4cCI6MTY0OTY2NDM5OX0.JWs4GSyt7R0dtISwmer1bgb6M0m4ote627Y_T1Ze67s",
+          },
+        }
+      );
+      if (response.ok) {
+        let data = await response.json();
+        setMyData(data);
+        console.log(data);
+      } else {
+        alert("Error fetching profiles");
+      }
+    } catch (error) {
+      alert("Error fetching profiles");
+    }
+  };
   return (
     <Container className="sidebar">
       <Row className="sidebar-top">
         <img
-          src="https://images.unsplash.com/photo-1648568713671-0c0a3eb47eea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+          src={"https://images.unsplash.com/photo-1648568713671-0c0a3eb47eea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"}
           alt=""
         />
-        <img className="sidebar-avatar" src={person} alt="avatar_img" />
+
+        <img className="sidebar-avatar" src={myData.image} alt="avatar_img" />
         <h2>Michael Redruello</h2>
         <h4>redruellomichael@gmail.com</h4>
       </Row>

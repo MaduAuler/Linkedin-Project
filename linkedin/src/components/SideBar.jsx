@@ -47,7 +47,7 @@ const SideBar = () => {
           </p>
         </div>
         <hr />
-        <div className="d-flex ml-2 justify-content-between align-items-center">
+        <div className="d-flex ml-2 justify-content-between">
           <p className="sidebar-top-text">Views on post</p>
           <p>
             <BsQuestionCircleFill
