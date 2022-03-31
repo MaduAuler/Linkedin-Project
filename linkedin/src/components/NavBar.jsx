@@ -67,7 +67,7 @@ const NavBar = () => {
         <div className="mr-5 space"></div>
 
         <div className="icons-container d-flex align-items-center justify-content-center ml-1">
-          <Link to="/posts/">
+          <Link to="/">
             <button className="mr-3 icon-div buttons">
               <HiHome className="icons" />
               <p className="icon-text">Home</p>

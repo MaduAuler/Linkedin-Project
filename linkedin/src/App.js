@@ -13,8 +13,9 @@ function App()
     <BrowserRouter>
       <NavBar />
       <Routes>
+         
         <Route path="/profile/:userId" element={<ProfilePage />} />
-        <Route path="/posts/" element={<FeedPage />} />
+        <Route path="/" element={<FeedPage />} />
       </Routes>
       <MyFooter />
     </BrowserRouter>
