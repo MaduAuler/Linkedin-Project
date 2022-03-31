@@ -6,10 +6,10 @@ const ProfilePage = () => {
   return (
     <Container>
       <Row>
-        <Col sm={12} md={7}>
+        <Col sm={12} md={8}>
           <Jumbotron />
         </Col>
-        <Col md={5}>
+        <Col md={4}>
           <SideBar />
         </Col>
       </Row>
