@@ -8,11 +8,13 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 const Feed = () => {
+  // for GET
   const [feeds, setFeeds] = useState([])
 
-  const { postId } = useParams()
-
+  // for POST
   const [postFeed, setPostFeed] = useState({ text: '' })
+
+  const { postId } = useParams()
 
   const [show, setShow] = useState(false)
   const handleClose = () => setShow(false)
@@ -20,7 +22,7 @@ const Feed = () => {
 
   useEffect(() => {
     fetchFeeds()
-  }, [postFeed])
+  }, [postId])
 
   const fetchFeeds = async () => {
     try {
@@ -36,9 +38,10 @@ const Feed = () => {
       if (response.ok) {
         const data = await response.json()
         console.log(data)
-        setFeeds(data)
+        const setToData = data.reverse().slice(0, 10)
+        setFeeds(setToData)
       } else {
-        console.log('fetch is not ok')
+        console.log('something is wrong with fetch')
       }
     } catch (error) {
       console.log(error)
@@ -79,10 +82,10 @@ const Feed = () => {
               <Form.Control type="text" placeholder="Start a post" />
             </Form.Group>
           </Form>
-
+          {/* Modal to post */}
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Edit Intro</Modal.Title>
+              <Modal.Title>Create a post</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <div>
@@ -100,11 +103,23 @@ const Feed = () => {
                     />
                   </Form.Group>
                 </Form>
-                <button onClick={postNewFeed}>Post</button>
+                <div className="d-flex justify-content-center">
+                  <Button variant="primary" onClick={postNewFeed}>
+                    Post
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    onClick={handleClose}
+                    className="ml-3"
+                  >
+                    Close
+                  </Button>
+                </div>
               </div>
             </Modal.Body>
           </Modal>
         </Row>
+
         <Row className="post-icons justify-content-around">
           <button>
             <div className="d-flex align-items-baseline">
@@ -140,71 +155,104 @@ const Feed = () => {
       </Container>
       <hr />
 
-      {/* {feeds
-        .filter((feed) => feed.user) */}
-      {feeds
-        .map((feed) => {
-          return (
-            <Container className="feed-container mb-2" key={feed._id}>
-              <Row className="py-3 justify-content-aroundn">
-                <div className="d-flex">
-                  {/* <Image src={feed.user.user.image} /> */}
-                  <div className="ml-2">
-                    <h6 className="mb-0">{feed.username}</h6>
-                    {/* <p className="mb-0" style={{ fontSize: '0.8em' }}>
+      {feeds.map((feed) => {
+        return (
+          <Container className="feed-container mb-2" key={feed._id}>
+            <Row className="py-3 justify-content-between">
+              <div className="d-flex">
+                {/* <Image src={feed.user.user.image} /> */}
+                <div>
+                  <h6>{feed.username}</h6>
+                  {/* <p className="mb-0" style={{ fontSize: '0.8em' }}>
                       {feed.user.title}
                     </p> */}
-                    <p className="mb-0" style={{ fontSize: '0.8em' }}>
-                      {feed.createdAt.slice(0, -8)}
-                    </p>
-                  </div>
+                  <p className="mb-0" style={{ fontSize: '0.8em' }}>
+                    {feed.createdAt.slice(0, -8)}
+                  </p>
                 </div>
+              </div>
+              <button className="feed-edit-button">
+                <i class="fa-solid fa-ellipsis" onClick={handleShow}></i>
+              </button>
+            </Row>
+            <Row>
+              <p>{feed.text}</p>
+            </Row>
+            <hr />
+
+            {/* Modal to edit */}
+            <Modal show={show} onHide={handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>Edit a post</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
                 <div>
-                  <i class="fa-solid fa-ellipsis"></i>
+                  <Form className="ml-2">
+                    <Form.Group>
+                      <Form.Control
+                        type="text"
+                        placeholder="Start a post"
+                        value={postFeed.text}
+                        onChange={(e) =>
+                          setPostFeed({
+                            text: e.target.value,
+                          })
+                        }
+                      />
+                    </Form.Group>
+                  </Form>
+                  <div className="d-flex justify-content-center">
+                    <Button variant="primary" onClick={postNewFeed}>
+                      Edit
+                    </Button>
+                    <Button
+                      variant="danger"
+                      className="ml-3"
+                      onClick={postNewFeed}
+                    >
+                      Delete
+                    </Button>
+                    <Button
+                      variant="secondary"
+                      onClick={handleClose}
+                      className="ml-3"
+                    >
+                      Close
+                    </Button>
+                  </div>
                 </div>
-              </Row>
-              <Row>
-                <p>{feed.text}</p>
-              </Row>
-              <hr />
-              <Row className="feed-reaction justify-content-around">
-                <button
-                  style={{ border: 'none', backgroundColor: 'transparent' }}
-                >
-                  <div className="d-flex">
-                    <AiOutlineLike className="feed-icon" />
-                    <p className="">Like</p>
-                  </div>
-                </button>
-                <button
-                  style={{ border: 'none', backgroundColor: 'transparent' }}
-                >
-                  <div className="d-flex">
-                    <FaRegCommentDots className="feed-icon" />
-                    <p className="ml-2">Comment</p>
-                  </div>
-                </button>
-                <button
-                  style={{ border: 'none', backgroundColor: 'transparent' }}
-                >
-                  <div className="d-flex">
-                    <BsArrow90DegRight className="feed-icon" />
-                    <p className="ml-2">Comment</p>
-                  </div>
-                </button>
-                <button
-                  style={{ border: 'none', backgroundColor: 'transparent' }}
-                >
-                  <div className="d-flex">
-                    <RiSendPlaneFill className="feed-icon" />
-                    <p className="ml-2">Send</p>
-                  </div>
-                </button>
-              </Row>
-            </Container>
-          )
-        })
-        .slice(0, 10)}
+              </Modal.Body>
+            </Modal>
+
+            <Row className="feed-reaction justify-content-around">
+              <button>
+                <div className="d-flex">
+                  <AiOutlineLike className="feed-icon" />
+                  <p className="">Like</p>
+                </div>
+              </button>
+              <button>
+                <div className="d-flex">
+                  <FaRegCommentDots className="feed-icon" />
+                  <p className="ml-2">Comment</p>
+                </div>
+              </button>
+              <button>
+                <div className="d-flex">
+                  <BsArrow90DegRight className="feed-icon" />
+                  <p className="ml-2">Share</p>
+                </div>
+              </button>
+              <button>
+                <div className="d-flex">
+                  <RiSendPlaneFill className="feed-icon" />
+                  <p className="ml-2">Send</p>
+                </div>
+              </button>
+            </Row>
+          </Container>
+        )
+      })}
     </>
   )
 }
