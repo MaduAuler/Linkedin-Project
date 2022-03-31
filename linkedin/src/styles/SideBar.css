@@ -29,3 +29,17 @@
   border-color: grey;
   font-weight: 600;
 }
+
+@media only screen and (max-width: 991px) {
+  .sidebar-people-container img {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+  }
+
+  .sidebar-top-text {
+    font-size: 0.8rem;
+    margin-left: 5%;
+    color: #676767;
+  }
+}
