@@ -5,6 +5,7 @@ import { BsArrow90DegRight } from 'react-icons/bs'
 import { RiSendPlaneFill } from 'react-icons/ri'
 import '../styles/feed.css'
 import { useState, useEffect } from 'react'
+import axios from 'axios'
 
 const Feed = () => {
   // for GET
@@ -16,18 +17,12 @@ const Feed = () => {
   // for PUT
   const [feedId, setFeedId] = useState('')
 
-
-  // for POST
-
-const [myData, setMyData] = useState({})
+  // for the image icon in the POST section
+  const [myData, setMyData] = useState({})
 
   const [show, setShow] = useState(false)
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
-  // for Uploading
-  const [show2, setShow2] = useState(false)
-  const handleClose2 = () => setShow2(false)
-  const handleShow2 = () => setShow2(true)
 
   const openEditModal = (id) => {
     handleShow()
@@ -37,13 +32,10 @@ const [myData, setMyData] = useState({})
 
   useEffect(() => {
     showFeeds()
-
     // if (feedId) {
     //   fetchFeedId()
     // }
-
     fetchMyProfile()
-
   }, [])
 
   const showFeeds = async () => {
@@ -142,22 +134,56 @@ const [myData, setMyData] = useState({})
     }
   }
 
+  // for Uploading image
+  const [show2, setShow2] = useState(false)
+  const handleClose2 = () => setShow2(false)
+  const handleShow2 = () => setShow2(true)
 
-  const uploadImage = async (e) => {
+  const [selectedFile, setSelectedFile] = useState(null)
+
+  const fileSelectedHandler = (e) => {
     e.preventDefault()
-   console.log(e.target.value)}
-    // let fd = new FormData()
-    // fd.append()
-    // let response = await fetch(
-    //   'https://striveschool-api.herokuapp.com/api/posts/' + feedId,
-    //   {
-    //     method: 'POST',
-    //     body: new FormData(formElem),
-    //   },
-    // )
+    setSelectedFile(e.target.files[0])
+  }
 
-    // let result = await response.json()
+  const fileUploadHandler = async () => {
+    try {
+      let fd = new FormData()
+      fd.append('post', selectedFile)
 
+      let response = await fetch(
+        'https://striveschool-api.herokuapp.com/api/posts/',
+        {
+          method: 'POST',
+          body: fd,
+          headers: {
+            Authorization:
+              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQxNmM4MGQzMzk4NDAwMTVjODgzYjUiLCJpYXQiOjE2NDg0NTQ3OTksImV4cCI6MTY0OTY2NDM5OX0.JWs4GSyt7R0dtISwmer1bgb6M0m4ote627Y_T1Ze67s',
+          },
+        },
+      )
+      if (response.ok) {
+        handleClose2()
+      }
+
+      // axios({
+      //   url: 'https://striveschool-api.herokuapp.com/api/posts/' + feedId,
+      //   method: 'POST',
+      //   headers: {
+      //     Authorization:
+      //       'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQxNmM4MGQzMzk4NDAwMTVjODgzYjUiLCJpYXQiOjE2NDg0NTQ3OTksImV4cCI6MTY0OTY2NDM5OX0.JWs4GSyt7R0dtISwmer1bgb6M0m4ote627Y_T1Ze67s',
+      //   },
+      //   data: fd,
+      // }).then(
+      //   (res) => {},
+      //   (err) => {
+      //     console.log(err)
+      //   },
+      // )
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const fetchMyProfile = async (param) => {
     try {
@@ -167,6 +193,7 @@ const [myData, setMyData] = useState({})
           headers: {
             Authorization:
               'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQxNmM4MGQzMzk4NDAwMTVjODgzYjUiLCJpYXQiOjE2NDg0NTQ3OTksImV4cCI6MTY0OTY2NDM5OX0.JWs4GSyt7R0dtISwmer1bgb6M0m4ote627Y_T1Ze67s',
+            'Content-Type': 'application/json',
           },
         },
       )
@@ -180,7 +207,6 @@ const [myData, setMyData] = useState({})
     } catch (error) {
       console.log(error)
     }
-
   }
 
   return (
@@ -220,7 +246,7 @@ const [myData, setMyData] = useState({})
                     <>
                       <Button
                         variant="success"
-                        onClick={() => submitFeed(feedId)}
+                        onClick={submitFeed}
                         className="ml-3"
                       >
                         Edit
@@ -238,6 +264,15 @@ const [myData, setMyData] = useState({})
                         className="ml-3"
                       >
                         Close
+                      </Button>
+
+                      <input
+                        type="file"
+                        className="d-block mb-2"
+                        onChange={fileSelectedHandler}
+                      />
+                      <Button variant="primary" onClick={fileUploadHandler}>
+                        Upload
                       </Button>
                     </>
                   ) : (
@@ -274,7 +309,17 @@ const [myData, setMyData] = useState({})
               <Modal.Title>Upload a image</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <input type="file" onChange={uploadImage} />
+              <input
+                type="file"
+                className="d-block mb-2"
+                onChange={fileSelectedHandler}
+              />
+              <Button variant="primary" onClick={fileUploadHandler}>
+                Upload
+              </Button>
+              <Button variant="secondary" onClick={handleClose2}>
+                Close
+              </Button>
             </Modal.Body>
           </Modal>
 
@@ -322,14 +367,18 @@ const [myData, setMyData] = useState({})
                   </p>
                 </div>
               </div>
-              <button
-                className="feed-edit-button"
-                onClick={() => {
-                  openEditModal(feed._id)
-                }}
-              >
-                <i class="fa-solid fa-ellipsis"></i>
-              </button>
+              {feed.username === 'Yoji' ? (
+                <button
+                  className="feed-edit-button"
+                  onClick={() => {
+                    openEditModal(feed._id)
+                  }}
+                >
+                  <i class="fa-solid fa-ellipsis"></i>
+                </button>
+              ) : (
+                ''
+              )}
             </Row>
             <Row>
               <p>{feed.text}</p>
