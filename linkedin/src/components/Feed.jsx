@@ -5,7 +5,6 @@ import { BsArrow90DegRight } from 'react-icons/bs'
 import { RiSendPlaneFill } from 'react-icons/ri'
 import '../styles/feed.css'
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
 
 const Feed = () => {
   // for GET
@@ -14,17 +13,24 @@ const Feed = () => {
   // for POST
   const [postFeed, setPostFeed] = useState({ text: '' })
 
-  const { postId } = useParams()
+  // for PUT
+  const [feedId, setFeedId] = useState('')
 
   const [show, setShow] = useState(false)
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
-  useEffect(() => {
-    fetchFeeds()
-  }, [postId])
+  const openEditModal = (id) => {
+    handleShow()
+    setPostFeed(id)
+    console.log(id)
+  }
 
-  const fetchFeeds = async () => {
+  useEffect(() => {
+    showFeeds()
+  }, [feedId])
+
+  const showFeeds = async () => {
     try {
       const response = await fetch(
         'https://striveschool-api.herokuapp.com/api/posts/',
@@ -48,12 +54,14 @@ const Feed = () => {
     }
   }
 
-  const postNewFeed = async () => {
+  const submitFeed = async () => {
     try {
       const response = await fetch(
-        'https://striveschool-api.herokuapp.com/api/posts/',
+        feedId
+          ? 'https://striveschool-api.herokuapp.com/api/posts/' + feedId
+          : 'https://striveschool-api.herokuapp.com/api/posts/',
         {
-          method: 'POST',
+          method: feedId ? 'PUT' : 'POST',
           body: JSON.stringify(postFeed),
           headers: {
             Authorization:
@@ -63,9 +71,10 @@ const Feed = () => {
         },
       )
       if (response.ok) {
-        fetchFeeds()
+        showFeeds()
+        handleClose()
       } else {
-        console.log('fetch is not ok')
+        console.log('something is wrong with fetch')
       }
     } catch (error) {
       console.log(error)
@@ -104,7 +113,7 @@ const Feed = () => {
                   </Form.Group>
                 </Form>
                 <div className="d-flex justify-content-center">
-                  <Button variant="primary" onClick={postNewFeed}>
+                  <Button variant="primary" onClick={submitFeed}>
                     Post
                   </Button>
                   <Button
@@ -171,8 +180,13 @@ const Feed = () => {
                   </p>
                 </div>
               </div>
-              <button className="feed-edit-button">
-                <i class="fa-solid fa-ellipsis" onClick={handleShow}></i>
+              <button
+                className="feed-edit-button"
+                onClick={() => {
+                  openEditModal(feed._id)
+                }}
+              >
+                <i class="fa-solid fa-ellipsis"></i>
               </button>
             </Row>
             <Row>
@@ -181,7 +195,7 @@ const Feed = () => {
             <hr />
 
             {/* Modal to edit */}
-            <Modal show={show} onHide={handleClose}>
+            {/* <Modal show={show} onHide={handleClose}>
               <Modal.Header closeButton>
                 <Modal.Title>Edit a post</Modal.Title>
               </Modal.Header>
@@ -202,16 +216,10 @@ const Feed = () => {
                     </Form.Group>
                   </Form>
                   <div className="d-flex justify-content-center">
-                    <Button variant="primary" onClick={postNewFeed}>
+                    <Button variant="primary" onClick={submitFeed}>
                       Edit
                     </Button>
-                    <Button
-                      variant="danger"
-                      className="ml-3"
-                      onClick={postNewFeed}
-                    >
-                      Delete
-                    </Button>
+            
                     <Button
                       variant="secondary"
                       onClick={handleClose}
@@ -222,7 +230,7 @@ const Feed = () => {
                   </div>
                 </div>
               </Modal.Body>
-            </Modal>
+            </Modal> */}
 
             <Row className="feed-reaction justify-content-around">
               <button>
