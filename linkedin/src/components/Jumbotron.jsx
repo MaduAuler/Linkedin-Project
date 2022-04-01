@@ -1,4 +1,4 @@
-import { useState, useEffect} from 'react'
+import { useState, useEffect } from "react";
 import {
   Container,
   Row,
@@ -8,31 +8,31 @@ import {
   Image,
   Modal,
   Form,
-} from 'react-bootstrap'
-import './jumbotron.css'
-import bgImage from '../assets/linkedin-background.jpg'
-import { useParams } from 'react-router-dom'
+} from "react-bootstrap";
+import "./jumbotron.css";
+import bgImage from "../assets/linkedin-background.jpg";
+import { useParams } from "react-router-dom";
 import { FiEdit2 } from "react-icons/fi";
-import Experience from './Experience'
-import axios from 'axios'
+import Experience from "./Experience";
+import axios from "axios";
+import ActivityContainer from "./Activities";
 
 const Jumbotron = () => {
-
-  const {userId} = useParams()
-  console.log(userId)
-  const [myData, setMyData] = useState({})
-  const [hide, setHide] = useState(false)
+  const { userId } = useParams();
+  console.log(userId);
+  const [myData, setMyData] = useState({});
+  const [hide, setHide] = useState(false);
   const [myDataUpdate, setMyDataUpdate] = useState({
     name: "",
     surname: "",
     email: "",
     bio: "",
     title: "",
-    area: ""
-  })
-  const [file, setFile] = useState(null)
+    area: "",
+  });
+  const [file, setFile] = useState(null);
   const [show, setShow] = useState(false);
-  const[show2, setShow2] = useState(false)
+  const [show2, setShow2] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -41,126 +41,131 @@ const Jumbotron = () => {
   const handleShow2 = () => setShow2(true);
 
   useEffect(() => {
-    if(userId==="me") {
-      fetchMyProfile("me")
-      setHide(true)
-    
+    if (userId === "me") {
+      fetchMyProfile("me");
+      setHide(true);
     } else {
-      fetchMyProfile(userId)
-      setHide(false)
+      fetchMyProfile(userId);
+      setHide(false);
     }
-  }, [userId])
+  }, [userId]);
 
   const fetchMyProfile = async (param) => {
     try {
       const response = await fetch(
-        'https://striveschool-api.herokuapp.com/api/profile/' + param,
+        "https://striveschool-api.herokuapp.com/api/profile/" + param,
         {
           headers: {
             Authorization:
-              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQxNmM4MGQzMzk4NDAwMTVjODgzYjUiLCJpYXQiOjE2NDg0NTQ3OTksImV4cCI6MTY0OTY2NDM5OX0.JWs4GSyt7R0dtISwmer1bgb6M0m4ote627Y_T1Ze67s',
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQxNmM4MGQzMzk4NDAwMTVjODgzYjUiLCJpYXQiOjE2NDg0NTQ3OTksImV4cCI6MTY0OTY2NDM5OX0.JWs4GSyt7R0dtISwmer1bgb6M0m4ote627Y_T1Ze67s",
           },
-        },
-      )
+        }
+      );
       if (response.ok) {
-        const data = await response.json()
-        console.log(data._id)
-        setMyData(data)
+        const data = await response.json();
+        console.log(data._id);
+        setMyData(data);
       } else {
-        console.log('fetch is not ok')
+        console.log("fetch is not ok");
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   const editProfile = async () => {
     try {
       const response = await fetch(
-        'https://striveschool-api.herokuapp.com/api/profile/',
+        "https://striveschool-api.herokuapp.com/api/profile/",
 
         {
-          method: 'PUT',
+          method: "PUT",
           body: JSON.stringify(myDataUpdate),
           headers: {
             Authorization:
-              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQxNmM4MGQzMzk4NDAwMTVjODgzYjUiLCJpYXQiOjE2NDg0NTQ3OTksImV4cCI6MTY0OTY2NDM5OX0.JWs4GSyt7R0dtISwmer1bgb6M0m4ote627Y_T1Ze67s',
-            'Content-Type': 'application/json',
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQxNmM4MGQzMzk4NDAwMTVjODgzYjUiLCJpYXQiOjE2NDg0NTQ3OTksImV4cCI6MTY0OTY2NDM5OX0.JWs4GSyt7R0dtISwmer1bgb6M0m4ote627Y_T1Ze67s",
+            "Content-Type": "application/json",
           },
-        },
-      )
+        }
+      );
       if (response.ok) {
-        fetchMyProfile()
-        handleClose()
+        fetchMyProfile();
+        handleClose();
       } else {
-        console.log('fetch is not ok')
+        console.log("fetch is not ok");
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
-  const handleFile = (e)=> {
-    let file = e.target.files[0]
-    setFile(file)
-  }
+  const handleFile = (e) => {
+    let file = e.target.files[0];
+    setFile(file);
+  };
 
+  const handleUpload = () => {
+    let formdata = new FormData();
 
-  const handleUpload = ()=> {
-    let formdata = new FormData()
+    formdata.append("profile", file);
 
-    formdata.append('profile', file)
+    axios({
+      url: "https://striveschool-api.herokuapp.com/api/profile/62416c80d339840015c883b5/picture",
+      method: "POST",
+      headers: {
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQxNmM4MGQzMzk4NDAwMTVjODgzYjUiLCJpYXQiOjE2NDg0NTQ3OTksImV4cCI6MTY0OTY2NDM5OX0.JWs4GSyt7R0dtISwmer1bgb6M0m4ote627Y_T1Ze67s",
+      },
+      data: formdata,
+    }).then(
+      (res) => {},
+      (err) => {
+        console.log(err);
+      }
+    );
 
-   axios({
-    url:'https://striveschool-api.herokuapp.com/api/profile/62416c80d339840015c883b5/picture',
-    method:"POST",
-    headers: {
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQxNmM4MGQzMzk4NDAwMTVjODgzYjUiLCJpYXQiOjE2NDg0NTQ3OTksImV4cCI6MTY0OTY2NDM5OX0.JWs4GSyt7R0dtISwmer1bgb6M0m4ote627Y_T1Ze67s',
-    },
-    data: formdata
-  }).then((res)=>{
-  }, (err) =>{
-    console.log(err)
-  })
-
-  handleClose2()
-
-  }
+    handleClose2();
+  };
 
   return (
     <>
       <Container className="mt-4 jumbotron-container">
         <div className="bg-div" style={{ backgroundImage: `url(${bgImage})` }}>
-          <i className="fa-solid fa-camera" ></i>
+          <i className="fa-solid fa-camera"></i>
         </div>
 
         <Modal show={show2} onHide={handleClose2}>
-        <Modal.Header closeButton>
-          <Modal.Title>Upload Picture</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <form>
-            <input type="file" onChange={(e)=> 
-            handleFile(e)}/>
-          <Button variant="secondary" onClick={handleClose2}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={()=> 
-            handleUpload()}>
-            Upload
-          </Button>
-          </form>
-        </Modal.Body>
-    
-      </Modal>
+          <Modal.Header closeButton>
+            <Modal.Title>Upload Picture</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <form>
+              <input type="file" onChange={(e) => handleFile(e)} />
+              <Button variant="secondary" onClick={handleClose2}>
+                Close
+              </Button>
+              <Button variant="primary" onClick={() => handleUpload()}>
+                Upload
+              </Button>
+            </form>
+          </Modal.Body>
+        </Modal>
 
         <Row className="edit-div px-4">
-       {hide ? <Button onClick={handleShow2}><Image src={myData.image} roundedCircle /></Button> : <Image src={myData.image} roundedCircle />} 
-          
-          <button onClick={handleShow} className="button-container">
-           {hide ? <FiEdit2 className='button-edit mt-4'/> : <div className='mt-5'></div>} 
+          {hide ? (
+            <Button onClick={handleShow2}>
+              <Image src={myData.image} roundedCircle />
+            </Button>
+          ) : (
+            <Image src={myData.image} roundedCircle />
+          )}
 
+          <button onClick={handleShow} className="button-container">
+            {hide ? (
+              <FiEdit2 className="button-edit mt-4" />
+            ) : (
+              <div className="mt-5"></div>
+            )}
           </button>
 
           <Modal show={show} onHide={handleClose}>
@@ -323,38 +328,10 @@ const Jumbotron = () => {
         </Row>
       </Container>
 
-      <Container className="mt-4 activity-container">
-        <Row className="pt-4">
-          <Col sm={12} md={6} className="name-div pl-5">
-            <h5 className="mb-0">Activity</h5>
-            <p className="">
-              <span>connections</span>
-            </p>
-          </Col>
-          <Col sm={12} md={6} pr-5 className="d-flex education-div pr-5">
-            <Button variant="primary" className="mx-2">
-              Start a post
-            </Button>
-          </Col>
-        </Row>
-        <Row>
-          <div className="pl-5 middle-div">
-            <h6 className="mb-0">You haven't posted lately</h6>
-            <p>Recent post you share or commented on will be displayed here</p>
-          </div>
-        </Row>
-        <hr className="my-2" />
-        <div className="bottom-div  d-flex justify-content-center">
-          <h6 className="pb-2 d-inline-block">Show all activity</h6>
-          <i className="fa-solid fa-arrow-right-long d-inline-block ml-2 mt-1"></i>
-        </div>
-      </Container>
+      <ActivityContainer />
 
       <Container className="mt-4 experience-container">
-
-    
-  { myData._id &&  <Experience  id={myData._id}/>}
-
+        {myData._id && <Experience id={myData._id} />}
       </Container>
 
       <Container className="mt-4 education-container">
@@ -395,7 +372,7 @@ const Jumbotron = () => {
         </div>
       </Container>
     </>
-  )
-}
+  );
+};
 
-export default Jumbotron
+export default Jumbotron;
