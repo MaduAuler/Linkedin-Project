@@ -51,7 +51,6 @@ const Feed = () => {
       )
       if (response.ok) {
         const data = await response.json()
-        console.log(data)
         const setToData = data.reverse().slice(0, 10)
         setFeeds(setToData)
       } else {
@@ -99,6 +98,10 @@ const Feed = () => {
         },
       )
       if (response.ok) {
+       
+        const data = await response.json()
+        fileUploadHandler(data._id)
+        console.log('response', data)
         showFeeds()
         handleClose()
       } else {
@@ -142,13 +145,13 @@ const Feed = () => {
     setSelectedFile(e.target.files[0])
   }
 
-  const fileUploadHandler = () => {
+  const fileUploadHandler = (idUp) => {
     let fd = new FormData()
 
     fd.append('post', selectedFile)
 
     axios({
-      url: 'https://striveschool-api.herokuapp.com/api/posts/' + feedId,
+      url: 'https://striveschool-api.herokuapp.com/api/posts/' + idUp,
       method: 'POST',
       headers: {
         Authorization:
@@ -244,14 +247,7 @@ const Feed = () => {
                       Delete
                     </Button>
 
-                    <input
-                      type="file"
-                      className="d-block ml-3"
-                      onChange={(e) => fileSelectedHandler(e)}
-                    />
-                    <Button variant="primary" onClick={fileUploadHandler}>
-                      Upload
-                    </Button>
+           
                     <Button
                       variant="secondary"
                       onClick={handleClose}
@@ -262,6 +258,12 @@ const Feed = () => {
                   </>
                 ) : (
                   <>
+                      <input
+                      type="file"
+                      className="d-block ml-3"
+                      onChange={(e) => fileSelectedHandler(e)}
+                    />
+                  
                     <Button variant="primary" onClick={submitFeed}>
                       Post
                     </Button>

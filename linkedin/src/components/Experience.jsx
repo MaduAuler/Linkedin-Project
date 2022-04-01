@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Row, Image, Col, Modal, Form, Button } from 'react-bootstrap'
+import axios from 'axios'
 
 const Experience = (props) => {
   const [experiences, setExperiences] = useState([])
@@ -46,7 +47,7 @@ const Experience = (props) => {
     } else {
       setMyId('')
     }
-  }, [])
+  }, [props.id])
 
   const getExperience = async () => {
     try {
@@ -86,8 +87,11 @@ const Experience = (props) => {
         },
       )
       if (response.ok) {
+        const data = await response.json()
+        console.log('here', data)
         getExperience()
         handleClose()
+        fileUploadHandler(data._id)
       } else {
         console.log('fetch is not ok')
       }
@@ -147,6 +151,38 @@ const Experience = (props) => {
     }
   }
 
+  // for Uploading image
+  const [selectedFile, setSelectedFile] = useState(null)
+
+  const fileSelectedHandler = (e) => {
+    e.preventDefault()
+    setSelectedFile(e.target.files[0])
+  }
+
+  const fileUploadHandler = (idUp) => {
+    let fd = new FormData()
+
+    fd.append('experience', selectedFile)
+
+    axios({
+      url: `https://striveschool-api.herokuapp.com/api/profile/${props.id}/experiences/${idUp}/picture`,
+      method: 'POST',
+      headers: {
+        Authorization:
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQxNmM4MGQzMzk4NDAwMTVjODgzYjUiLCJpYXQiOjE2NDg0NTQ3OTksImV4cCI6MTY0OTY2NDM5OX0.JWs4GSyt7R0dtISwmer1bgb6M0m4ote627Y_T1Ze67s',
+      },
+      data: fd,
+    }).then(
+      (res) => {
+        console.log(res)
+      },
+      (err) => {
+        console.log(err)
+      },
+    )
+    handleClose()
+  }
+
   //our id: 62416c80d339840015c883b5
 
   return (
@@ -165,7 +201,7 @@ const Experience = (props) => {
 
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Post Experience</Modal.Title>
+             {idExperiences ? <Modal.Title>Edit Experience</Modal.Title> : <Modal.Title>Post Experience</Modal.Title>} 
             </Modal.Header>
             <Modal.Body>
               <div>
@@ -243,10 +279,14 @@ const Experience = (props) => {
                     }
                   />
                 </Form.Group>
+ {!idExperiences &&  <input
+                      type="file"
+                      className="d-block ml-3"
+                      onChange={(e) => fileSelectedHandler(e)}
+                    />}
+               
 
-                <Button variant="primary" onClick={editOrPost}>
-                  Post
-                </Button>
+                {idExperiences ? <Button variant="primary" onClick={editOrPost}> Edit </Button> : <Button variant="primary" onClick={editOrPost}> Post </Button> }
                 <Button variant="secondary" onClick={handleClose}>
                   Close
                 </Button>
@@ -260,12 +300,10 @@ const Experience = (props) => {
           <>
             <Row className="d-flex">
               <div className="pl-5">
-                <Image
-                  src={experience.image}
-                  className="mr-2 image-experience"
-                />
+              <Image className="mr-2" style={{borderRadius:'1000px', height:'50px', width:'50px'}} src={experience.image}/>
               </div>
               <div className="pl-1 text-left">
+                
                 <h6 className="mb-0">{experience.company}</h6>
                 <p className="mb-0">{experience.role}</p>
                 <p className="mb-0">
