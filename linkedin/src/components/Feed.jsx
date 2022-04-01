@@ -5,6 +5,7 @@ import { BsArrow90DegRight } from 'react-icons/bs'
 import { RiSendPlaneFill } from 'react-icons/ri'
 import '../styles/feed.css'
 import { useState, useEffect } from 'react'
+import axios from 'axios'
 
 const Feed = () => {
   // for GET
@@ -16,18 +17,12 @@ const Feed = () => {
   // for PUT
   const [feedId, setFeedId] = useState('')
 
-
-  // for POST
-
-const [myData, setMyData] = useState({})
+  // for the image icon in the POST section
+  const [myData, setMyData] = useState({})
 
   const [show, setShow] = useState(false)
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
-  // for Uploading
-  const [show2, setShow2] = useState(false)
-  const handleClose2 = () => setShow2(false)
-  const handleShow2 = () => setShow2(true)
 
   const openEditModal = (id) => {
     handleShow()
@@ -37,13 +32,10 @@ const [myData, setMyData] = useState({})
 
   useEffect(() => {
     showFeeds()
-
     // if (feedId) {
     //   fetchFeedId()
     // }
-
     fetchMyProfile()
-
   }, [])
 
   const showFeeds = async () => {
@@ -142,23 +134,39 @@ const [myData, setMyData] = useState({})
     }
   }
 
+  // for Uploading image
+  const [selectedFile, setSelectedFile] = useState(null)
 
-  const uploadImage = async (e) => {
+  const fileSelectedHandler = (e) => {
     e.preventDefault()
-   console.log(e.target.value)}
-    // let fd = new FormData()
-    // fd.append()
-    // let response = await fetch(
-    //   'https://striveschool-api.herokuapp.com/api/posts/' + feedId,
-    //   {
-    //     method: 'POST',
-    //     body: new FormData(formElem),
-    //   },
-    // )
+    setSelectedFile(e.target.files[0])
+  }
 
-    // let result = await response.json()
+  const fileUploadHandler = () => {
+    let fd = new FormData()
 
+    fd.append('post', selectedFile)
 
+    axios({
+      url: 'https://striveschool-api.herokuapp.com/api/posts/' + feedId,
+      method: 'POST',
+      headers: {
+        Authorization:
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQxNmM4MGQzMzk4NDAwMTVjODgzYjUiLCJpYXQiOjE2NDg0NTQ3OTksImV4cCI6MTY0OTY2NDM5OX0.JWs4GSyt7R0dtISwmer1bgb6M0m4ote627Y_T1Ze67s',
+      },
+      data: fd,
+    }).then(
+      (res) => {
+        console.log(res)
+      },
+      (err) => {
+        console.log(err)
+      },
+    )
+    handleClose()
+  }
+
+  // for displaying image icon on post section
   const fetchMyProfile = async (param) => {
     try {
       const response = await fetch(
@@ -167,6 +175,7 @@ const [myData, setMyData] = useState({})
           headers: {
             Authorization:
               'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQxNmM4MGQzMzk4NDAwMTVjODgzYjUiLCJpYXQiOjE2NDg0NTQ3OTksImV4cCI6MTY0OTY2NDM5OX0.JWs4GSyt7R0dtISwmer1bgb6M0m4ote627Y_T1Ze67s',
+            'Content-Type': 'application/json',
           },
         },
       )
@@ -180,7 +189,6 @@ const [myData, setMyData] = useState({})
     } catch (error) {
       console.log(error)
     }
-
   }
 
   return (
@@ -194,89 +202,90 @@ const [myData, setMyData] = useState({})
             </Form.Group>
           </Form>
 
-          {/* Modal to post */}
+          {/* Modal for post/edit/delete/upload */}
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Create a post</Modal.Title>
+              {feedId ? (
+                <Modal.Title>Edit a post</Modal.Title>
+              ) : (
+                <Modal.Title>Create a post</Modal.Title>
+              )}
             </Modal.Header>
             <Modal.Body>
-              <div>
-                <Form className="ml-2">
-                  <Form.Group>
-                    <Form.Control
-                      type="text"
-                      placeholder="Start a post"
-                      value={postFeed.text}
-                      onChange={(e) =>
-                        setPostFeed({
-                          text: e.target.value,
-                        })
-                      }
+              <Form className="ml-2">
+                <Form.Group>
+                  <Form.Control
+                    type="text"
+                    placeholder="Start/Edit a post"
+                    value={postFeed.text}
+                    onChange={(e) =>
+                      setPostFeed({
+                        text: e.target.value,
+                      })
+                    }
+                  />
+                </Form.Group>
+              </Form>
+              <div className="d-flex justify-content-center">
+                {feedId ? (
+                  <>
+                    <Button
+                      variant="success"
+                      onClick={submitFeed}
+                      className="ml-3"
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant="danger"
+                      onClick={deleteFeed}
+                      className="ml-3"
+                    >
+                      Delete
+                    </Button>
+
+                    <input
+                      type="file"
+                      className="d-block ml-3"
+                      onChange={(e) => fileSelectedHandler(e)}
                     />
-                  </Form.Group>
-                </Form>
-                <div className="d-flex justify-content-center">
-                  {feedId ? (
-                    <>
-                      <Button
-                        variant="success"
-                        onClick={() => submitFeed(feedId)}
-                        className="ml-3"
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        variant="danger"
-                        onClick={deleteFeed}
-                        className="ml-3"
-                      >
-                        Delete
-                      </Button>
-                      <Button
-                        variant="secondary"
-                        onClick={handleClose}
-                        className="ml-3"
-                      >
-                        Close
-                      </Button>
-                    </>
-                  ) : (
-                    <>
-                      <Button variant="primary" onClick={submitFeed}>
-                        Post
-                      </Button>
-                      <Button
-                        variant="secondary"
-                        onClick={handleClose}
-                        className="ml-3"
-                      >
-                        Close
-                      </Button>
-                    </>
-                  )}
-                </div>
+                    <Button variant="primary" onClick={fileUploadHandler}>
+                      Upload
+                    </Button>
+                    <Button
+                      variant="secondary"
+                      onClick={handleClose}
+                      className="ml-3"
+                    >
+                      Close
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button variant="primary" onClick={submitFeed}>
+                      Post
+                    </Button>
+                    <Button
+                      variant="secondary"
+                      onClick={handleClose}
+                      className="ml-3"
+                    >
+                      Close
+                    </Button>
+                  </>
+                )}
               </div>
             </Modal.Body>
           </Modal>
         </Row>
 
         <Row className="post-icons justify-content-around">
-          <button onClick={handleShow2}>
+          <button>
             <div className="d-flex align-items-baseline">
               <i class="fa-solid fa-image" style={{ color: '#70B5F8' }}></i>
               <p className="ml-3">Photo</p>
             </div>
           </button>
-
-          {/* Modal to upload image */}
-          <Modal show={show2} onHide={handleClose2}>
-            <Modal.Header closeButton>
-              <Modal.Title>Upload a image</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <input type="file" onChange={uploadImage} />
-            </Modal.Body>
-          </Modal>
 
           <button>
             <div className="d-flex align-items-baseline">
@@ -322,21 +331,31 @@ const [myData, setMyData] = useState({})
                   </p>
                 </div>
               </div>
-              <button
-                className="feed-edit-button"
-                onClick={() => {
-                  openEditModal(feed._id)
-                }}
-              >
-                <i class="fa-solid fa-ellipsis"></i>
-              </button>
+              {feed.username === 'Yoji' ? (
+                <button
+                  className="feed-edit-button"
+                  onClick={() => {
+                    openEditModal(feed._id)
+                  }}
+                >
+                  <i class="fa-solid fa-ellipsis"></i>
+                </button>
+              ) : (
+                ''
+              )}
             </Row>
             <Row>
               <p>{feed.text}</p>
             </Row>
-            <hr />
+            {feed.image ? (
+              <Row>
+                <Image src={feed.image} className="posted-image" />
+              </Row>
+            ) : (
+              ''
+            )}
 
-            <Row className="feed-reaction justify-content-around">
+            <Row className="feed-reaction justify-content-around mt-3">
               <button>
                 <div className="d-flex">
                   <AiOutlineLike className="feed-icon" />
