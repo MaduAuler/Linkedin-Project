@@ -41,11 +41,12 @@
   background-color: transparent;
 }
 
-.feed-container img {
-  height: 58px;
-  width: 58px;
-}
 .feed-icon {
   height: 1.5em;
   width: 1.5em;
+}
+.posted-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
