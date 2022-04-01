@@ -9,7 +9,7 @@ const ProfilePage = () => {
         <Col sm={12} md={8}>
           <Jumbotron />
         </Col>
-        <Col md={4}>
+        <Col md={4} lg={3}>
           <SideBar />
         </Col>
       </Row>

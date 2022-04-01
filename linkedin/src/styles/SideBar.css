@@ -30,6 +30,22 @@
   font-weight: 600;
 }
 
+.sidebar-people-info {
+  margin-left: 5%;
+  margin-bottom: 3%;
+}
+
+@media only screen and (max-width: 1199px) {
+  .sidebar-people-container {
+    font-size: 0.8rem;
+  }
+
+  .sidebar-people-container img {
+    width: 35px;
+    height: 35px;
+  }
+}
+
 @media only screen and (max-width: 991px) {
   .sidebar-people-container img {
     border-radius: 50%;

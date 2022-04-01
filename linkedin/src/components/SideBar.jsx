@@ -66,7 +66,7 @@ const SideBar = () => {
           .map((profile) => {
             return (
               <Row className="d-flex mb-2">
-                <div className="ml-1 mb-5">
+                <div className="sidebar-people-info">
                   <Link to={"/profile/" + profiles[profile]._id}>
                     <Image src={profiles[profile].image} className="mr-2" />
                   </Link>
