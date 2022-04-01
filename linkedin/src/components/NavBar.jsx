@@ -15,15 +15,14 @@ import {
 import { HiHome } from 'react-icons/hi'
 import { MdWork, MdNotifications } from 'react-icons/md'
 import { RiMessage3Fill } from 'react-icons/ri'
-import person from '../person.jpg'
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
 const NavBar = () => {
-  const [myData, setMyData]= useState({})
+  const [myData, setMyData] = useState({})
 
   useEffect(() => {
-  fetchMyProfile()
+    fetchMyProfile()
   }, [])
 
   const fetchMyProfile = async () => {
@@ -44,11 +43,8 @@ const NavBar = () => {
       } else {
         console.log('fetch is not ok')
       }
-    } catch (error) {
-     
-    }
+    } catch (error) {}
   }
-
 
   return (
     <div className="flex-container d-flex align-items-center ">
